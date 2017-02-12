@@ -8,7 +8,7 @@ class Fleet extends CI_Controller {
 		$this->load->database();
 		$this->load->library(array('ion_auth','form_validation'));
 		$this->load->helper(array('url','language'));
-
+        $this->load->model('fleet_model');
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
 		$this->lang->load('auth');
@@ -131,8 +131,9 @@ class Fleet extends CI_Controller {
                 'placeholder'=>'Vehicle type',
                 'class' => 'form-control'
             );
-           
+            $this->render_page('fleet/edit_vehicle_type/'.$vehicle_type->id);
         }
+
    }
 
     
@@ -486,5 +487,16 @@ class Fleet extends CI_Controller {
 		}
 	}
 
+    public function render_page($view, $data=null, $returnhtml=false)//I think this makes more sense
+    {
 
+        $this->viewdata = (empty($data)) ? $this->data: $data;
+
+       
+        $this->load->view('theme/header');
+        $this->load->view('theme/sidebar');
+        $this->load->view($view, $this->viewdata, $returnhtml);
+        $this->load->view('theme/footer');
+    
+    } 
 }

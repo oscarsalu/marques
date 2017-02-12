@@ -111,8 +111,7 @@
           </a>
           <ul class="treeview-menu">
           <li><a href="../UI/general.html"><i class="fa fa-truck"></i> fleet </a></li>
-            <li><a href="../UI/timeline.html"><i class="fa fa-circle-o"></i>Fleet types</a></li>
-            <li><a href="../UI/modals.html"><i class="fa fa-circle-o"></i>Vehicle Types</a></li>
+           <li><a href="<?= site_url('fleet/vehicle_types') ?>"><i class="fa fa-circle-o"></i>Vehicle Types</a></li>
            <li><a href="<?= site_url('auth/index') ?>"><i class="fa fa-users"></i> <span>Drivers</span> </a></li>
            </ul>
            </li>
