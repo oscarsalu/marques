@@ -6,10 +6,10 @@
         <div class="box-header with-border">
           <h3 class="box-title">Vehicle Types</h3>
 
-          <div class="box-tools pull-right">
+   <div class="box-tools pull-right">
                   <div class="btn-group">
                 
-                  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"  title="vtypes">vehicle types
+                  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"  title="vtypes">  vehicle_types
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
@@ -32,8 +32,18 @@
                    
                   </ul>
                 </div>
-          </div>
-        </div>
+                    <div class="btn-group">
+                    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"  title="vtypes">Drivers
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="<?= site_url('fleet/drivers'); ?>"><i class="fa fa-user"></i>Drivers</a></li>
+                     <li class="divider"></li>
+                    <li><a href="<?= site_url('fleet/create_driver'); ?>"><i class="fa fa-plus"></i>Add a Driver</a></li>
+                   
+                  </ul>
+                </div>
         <div class="box-body">
 <div id="infoMessage"><?php echo $message;?></div>
 

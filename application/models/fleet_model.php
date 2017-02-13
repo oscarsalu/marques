@@ -99,4 +99,50 @@ class Fleet_model extends CI_Model {
         }
         return FALSE;
      }
+
+
+  /***************************************end of fleet *************************************************/
+  /******CRUD OPERATIONS OF THE driver OBJECT ***************************************************************************************/
+
+// get the drivers 
+        public function get_drivers()
+        {
+                $query = $this->db->get('drivers');
+                return $query->result();
+        }
+
+        // store the driver  object
+        public function create_driver($data)
+        {
+            if($this->db->insert('drivers', $data)){
+                return true;
+            }
+            return false;
+        }
+
+        // return a particular driver 
+      public function get_driver($id)
+      { 
+          return $this->db->get_where('drivers', array('id'=>$id));     
+      }
+
+       //update a particular record of drivers
+     public function update_driver($id, $data)
+     {
+        $this->db->where('id', $id);
+        if ($this->db->update('drivers', $data)) {
+           return TRUE;
+        }
+        return FALSE;
+     }
+      //delete a record of vehicle type
+     public function delete_driver($id='')
+     {
+         $this->db->where('id', $id);
+        if ($this->db->delete('drivers')) {
+           return TRUE;
+        }
+        return FALSE;
+     }
+
 }

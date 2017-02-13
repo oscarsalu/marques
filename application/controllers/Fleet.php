@@ -445,9 +445,218 @@ class Fleet extends CI_Controller {
        }
   }
 
+//**********************************************end of fleet object ***************************************************/
+
+  /*********************************** Driver object *****************************************************************************/
+
+
+   //get the drivers
+    public function drivers()
+    {
+
+        
+            
+            $this->data['drivers'] = $this->fleet_model->get_drivers();
+            
+            $this->render_page('theme/fleet/drivers', $this->data);
+        
+    }
 
 
 
+
+    
+    
+    // create a new driver object
+    public function create_driver()
+    {
+        
+
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
+        {
+            redirect('auth/login', 'refresh');
+        }
+
+        // validate form input
+        $this->form_validation->set_rules('name', 'Driver name', 'required');
+        $this->form_validation->set_rules('date_added', 'Date added', 'required');
+        $this->form_validation->set_rules('phone', 'Phone Number', 'required');
+        $this->form_validation->set_rules('details', 'details', 'trim');
+      
+
+        if ($this->form_validation->run() == true)
+        {
+ 
+            $driver_data = array(
+                'name' => $this->input->post('name'),
+                'date_added'  => $this->input->post('date_added'),
+                'phone'    => $this->input->post('phone'),
+                'details'      => $this->input->post('details'),
+            );
+        }
+        if ($this->form_validation->run() == true && $this->fleet_model->create_driver($driver_data))
+        {
+            // check to see if we are creating the object
+            // redirect them back to the admin page
+            $this->session->set_flashdata('message', $this->ion_auth->messages());
+            redirect("fleet/drivers", 'refresh');
+        }
+        else
+        {
+            // display the create fleet form
+            // set the flash data error message if there is one
+            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+            $this->data['csrf'] = $this->_get_csrf_nonce();
+            $this->data['name'] = array(
+                'name'  => 'name',
+                'id'    => 'name',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('name'),
+                'placeholder'=>'Driver name',
+                'class' => 'form-control'
+            );
+            $this->data['phone'] = array(
+                'name'  => 'phone',
+                'id'    => 'phone',
+                 'placeholder'=>'Phone number',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('phone'),
+                'class' => 'form-control'
+            );
+            $this->data['date_added'] = array(
+                'name'  => 'date_added',
+                'id'    => 'datepicker',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('date_added'),
+                'class' => 'form-control'
+            );
+            $this->data['details'] = array(
+                'name'  => 'details',
+                'id'    => 'details',
+                'placeholder'=>'Other driver details',
+                'value' => $this->form_validation->set_value('details'),
+                'class' => 'form-control'
+            );
+     
+
+            $this->render_page('theme/fleet/create_driver', $this->data);
+        }
+    }
+
+    // edit a driver
+    public function edit_driver($id)
+    {
+       
+
+
+        $driver = $this->fleet_model->get_driver($id)->row();
+        
+         // validate form input
+        $this->form_validation->set_rules('name', 'Driver name', 'required');
+        $this->form_validation->set_rules('date_added', 'Date added', 'required');
+        $this->form_validation->set_rules('phone', 'Phone Number', 'required');
+        $this->form_validation->set_rules('details', 'details', 'trim');
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
+                show_error($this->lang->line('error_csrf'));
+            }
+
+        
+
+            if ($this->form_validation->run() === TRUE)
+            {
+                 $driver_data = array(
+                'name' => $this->input->post('name'),
+                'date_added'  => $this->input->post('date_added'),
+                'phone'    => $this->input->post('phone'),
+                'details'      => $this->input->post('details'),
+            );
+
+            
+
+        // check to see if we are updating the driver record
+               if($this->fleet_model->update_driver($driver->id, $driver_data))
+                {
+                    // redirect them back to the admin page if admin, or to the base url if non admin
+                    $this->session->set_flashdata('message', $this->ion_auth->messages() );
+                    redirect('fleet/drivers', 'refresh');
+                    
+                }
+                else
+                {
+                    // redirect them back to the admin page if admin, or to the base url if non admin
+                    $this->session->set_flashdata('message', $this->ion_auth->errors() );
+                    redirect('fleet/edit_driver/'.$driver->id, 'refresh');
+
+                }
+
+            }
+        }
+
+        // display the edit fleet form
+        $this->data['csrf'] = $this->_get_csrf_nonce();
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        // pass the fleet to the view
+        $this->data['driver'] = $driver;
+      
+        
+        
+     $this->data['name'] = array(
+                'name'  => 'name',
+                'id'    => 'name',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('name', $driver->name),
+                'placeholder'=>'Driver name',
+                'class' => 'form-control'
+            );
+            $this->data['phone'] = array(
+                'name'  => 'phone',
+                'id'    => 'phone',
+                 'placeholder'=>'Phone number',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('phone', $driver->phone),
+                'class' => 'form-control'
+            );
+            $this->data['date_added'] = array(
+                'name'  => 'date_added',
+                'id'    => 'datepicker',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('date_added', $driver->date_added),
+                'class' => 'form-control'
+            );
+            $this->data['details'] = array(
+                'name'  => 'details',
+                'id'    => 'details',
+                'placeholder'=>'Fleet make',
+                'value' => $this->form_validation->set_value('details', $driver->details),
+                'class' => 'form-control'
+            );
+     
+
+
+        $this->render_page('theme/fleet/edit_driver', $this->data);
+    }
+
+  public function delete_driver($id='')
+  {
+     
+       if(isset($id)){
+          $isDriverDeleted=$this->fleet_model->delete_driver($id);
+          if($isDriverDeleted==TRUE){
+            $this->data['message']="fleet successfuly deleted";
+            redirect('fleet/drivers',$this->data);
+          }
+       }
+  }
+
+///****************************end of delete driver *******************************************************/
 	
 
 	public function _get_csrf_nonce()

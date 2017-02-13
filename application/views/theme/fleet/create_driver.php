@@ -1,11 +1,14 @@
+
 <!-- Main content -->
     <section class="content">
-
-      <!-- Default box -->
+      <div class="row">
+        <div class="col-xs-12">
+       <form class="form-horizontal" method="post" action="<?= site_url('fleet/create_driver') ?>">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Vehicle Types</h3>
-<div class="box-tools pull-right">
+          <h3 class="box-title"><i class="fa fa-truck"></i>Add Fleet</h3>
+
+          <div class="box-tools pull-right">
                   <div class="btn-group">
                 
                   <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"  title="vtypes">  vehicle_types
@@ -46,41 +49,57 @@
           </div>
         </div>
         <div class="box-body">
-   
 
 
 
 
-						<table  class="table table-bordered table-striped" id="example1">
-						   <thead>
-							<tr>
-								<th>id</th>
-								<th>Vehicle Type</th>
-								<th>Action</th>
-							</tr>
-							</thead>
-							<tbody>
-							<?php foreach ($vehicle_types as $vtype):?>
-								<tr>
-						            <td><?= $vtype->id ?></td>
-						            <td><?= $vtype->VehicleType ?></td>
-						            <td><a href="<?= site_url('fleet/edit_vehicle_type/'.$vtype->id); ?>" data-toggle="tooltip"  title="edit" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
-                        <a href="<?= site_url('fleet/delete_vehicle_type/'.$vtype->id); ?>" data-toggle="tooltip"  title="delete" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>           
-									</td>
-								</tr>
-							<?php endforeach;?>
-							</tbody>
-          </table>
+            <div class="form-group">
+                  <label for="type" class="col-sm-2 control-label">Driver Name<span style="color:red">*</span></label>
+
+                  <div class="col-sm-10">
+                    <?php echo form_input($name);?><span><?= form_error('name'); ?></span>
+                  </div>
+               </div>
+      
+              <div class="form-group">
+                  <label for="phone no" class="col-sm-2 control-label">Phone Number<span style="color:red">*</span></label>
+
+                  <div class="col-sm-10">
+                    <?php echo form_input($phone);?><span><?= form_error('phone'); ?></span>
+                  </div>
+               </div>
+            <div class="form-group">
+                  <label for="reg date" class="col-sm-2 control-label">Date added<span style="color:red">*</span></label>
+
+                  <div class="col-sm-10">
+                    <?php echo form_input($date_added);?><span><?= form_error('date_added'); ?></span>
+                  </div>
+               </div>
 
 
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
- 
-        </div>
-        <!-- /.box-footer-->
+
+             <div class="form-group">
+                  <label for="details" class="col-sm-2 control-label">Details</label>
+
+                  <div class="col-sm-10">
+                    <?php echo form_textarea($details);?><span><?= form_error('details'); ?></span>
+                  </div>
+               </div>
+              
+      <?php echo form_hidden($csrf); ?>
       </div>
-      <!-- /.box -->
+     <div class="box-footer">
+     <button type="reset" class="btn btn-xs btn-danger pull-left"> cancel </button>
+         <?php echo form_submit('submit', 'Save driver','class="btn btn-xs btn-success pull-right"');?>
+        </div>
 
-        
+
+            </div><!-- /.box-body -->
+           </div><!--box box-success-->
+           <?php echo form_close();?>
+
+          </div>
+          </div>
+       </section>
+
 
