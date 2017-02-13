@@ -17,7 +17,7 @@ class Fleet_model extends CI_Model {
                 return $query->result();
         }
 // store the vehicle type object
-        public function insert_vehicle_type($data)
+        public function create_vehicle_type($data)
         {
             if($this->db->insert('vehicletype', $data)){
                 return true;
@@ -56,4 +56,47 @@ class Fleet_model extends CI_Model {
      }
 
 /******************************* END OF CRUD OPERATIONS OF THE VEHICLE TYPE OPERATIONS ******************************************************************/
+
+/******CRUD OPERATIONS OF THE FLEET OBJECT ***************************************************************************************/
+
+// get the Fleets 
+        public function get_fleets()
+        {
+                $query = $this->db->get('vehiclemaster');
+                return $query->result();
+        }
+
+        // store the vehicle  object
+        public function create_fleet($data)
+        {
+            if($this->db->insert('vehiclemaster', $data)){
+                return true;
+            }
+            return false;
+        }
+
+        // return a particular vehicle 
+      public function get_fleet($id)
+      { 
+          return $this->db->get_where('vehiclemaster', array('ID'=>$id));     
+      }
+
+       //update a particular record of vehicle type
+     public function update_fleet($id, $data)
+     {
+        $this->db->where('ID', $id);
+        if ($this->db->update('vehiclemaster', $data)) {
+           return TRUE;
+        }
+        return FALSE;
+     }
+      //delete a record of vehicle type
+     public function delete_fleet($id='')
+     {
+         $this->db->where('ID', $id);
+        if ($this->db->delete('vehiclemaster')) {
+           return TRUE;
+        }
+        return FALSE;
+     }
 }

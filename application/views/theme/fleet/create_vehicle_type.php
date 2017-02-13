@@ -35,41 +35,32 @@
           </div>
         </div>
         <div class="box-body">
+<div id="infoMessage"><?php echo $message;?></div>
+
+
+
+            <div class="form-group">
+                  <label for="type" class="col-sm-2 control-label">Vehicle Type<span style="color:red">*</span></label>
+
+                  <div class="col-sm-10">
+                    <?php echo form_input($type);?><span><?= form_error('type'); ?></span>
+                  </div>
+               </div>
+      
    
-
-
-
-
-						<table  class="table table-bordered table-striped" id="example1">
-						   <thead>
-							<tr>
-								<th>id</th>
-								<th>Vehicle Type</th>
-								<th>Action</th>
-							</tr>
-							</thead>
-							<tbody>
-							<?php foreach ($vehicle_types as $vtype):?>
-								<tr>
-						            <td><?= $vtype->id ?></td>
-						            <td><?= $vtype->VehicleType ?></td>
-						            <td><a href="<?= site_url('fleet/edit_vehicle_type/'.$vtype->id); ?>" data-toggle="tooltip"  title="edit" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
-                        <a href="<?= site_url('fleet/delete_vehicle_type/'.$vtype->id); ?>" data-toggle="tooltip"  title="delete" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>           
-									</td>
-								</tr>
-							<?php endforeach;?>
-							</tbody>
-          </table>
-
-
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
- 
-        </div>
-        <!-- /.box-footer-->
+      <?php echo form_hidden($csrf); ?>
       </div>
-      <!-- /.box -->
+     <div class="box-footer">
+     <button type="reset" class="btn btn-xs btn-danger pull-left"> cancel </button>
+         <?php echo form_submit('submit', 'Save Vehicle Type','class="btn btn-xs btn-success pull-right"');?>
+        </div>
 
-        
+<?php echo form_close();?>
+
+            </div><!-- /.box-body -->
+           </div><!--box box-success-->
+          </div>
+          </div>
+       </section>
+
 

@@ -59,7 +59,7 @@ class Fleet extends CI_Controller {
             // display the create fleet form
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
+               $this->data['csrf'] = $this->_get_csrf_nonce();
             $this->data['type'] = array(
                 'name'  => 'type',
                 'id'    => 'type',
@@ -87,7 +87,7 @@ class Fleet extends CI_Controller {
         }
 
         $vehicle_type = $this->fleet_model->get_vehicle_type($id)->row();
-      
+        $this->data['vehicle_type']=$vehicle_type;
         // validate form input
         $this->form_validation->set_rules('type', 'Vehicle type', 'required');
        
@@ -104,11 +104,11 @@ class Fleet extends CI_Controller {
 
             if ($this->form_validation->run() === TRUE)
             {
-                $vehicle_data = array( 'type' => $this->input->post('type'));
+                $vehicle_data = array( 'VehicleType' => $this->input->post('type'));
             
 
           // check to see if we are updating the vehicle type
-               if($this->fleet_model->update_vehicle_type($vehicle_type->id, $data))
+               if($this->fleet_model->update_vehicle_type($vehicle_type->id, $vehicle_data))
                 {
                     // redirect them back to the admin page if admin, or to the base url if non admin
                     $this->session->set_flashdata('message', $this->ion_auth->messages() );
@@ -122,16 +122,17 @@ class Fleet extends CI_Controller {
                    redirect('fleet/edit_vehicle_type/'.$vehicle_type->id, 'refresh');
             }
         }else{
-
+              $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+              $this->data['csrf'] = $this->_get_csrf_nonce();
               $this->data['type'] = array(
                 'name'  => 'type',
                 'id'    => 'type',
                 'type'  => 'text',
-                'value' => $this->form_validation->set_value('type', $vehicle_type->type),
+                'value' => $this->form_validation->set_value('type', $vehicle_type->VehicleType),
                 'placeholder'=>'Vehicle type',
                 'class' => 'form-control'
             );
-            $this->render_page('fleet/edit_vehicle_type/'.$vehicle_type->id);
+            $this->render_page('theme/fleet/edit_vehicle_type', $this->data);
         }
 
    }
@@ -161,26 +162,21 @@ class Fleet extends CI_Controller {
     /*************************************end of the object **********************************************************************/
 
 
+  /*********************************** Fleet object *****************************************************************************/
 
 
-
-	// redirect if needed, otherwise display the fleet list
-	public function fleet_index()
+   //get the fleets
+	public function fleets()
 	{
 
-			// set the flash data error message if there is one
-			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-			//list the fleets
-			$this->data['fleets'] = $this->ion_auth->fleets()->result();
-			foreach ($this->data['fleets'] as $k => $fleet)
-			{
-				$this->data['fleets'][$k]->groups = $this->ion_auth->get_fleets_groups($fleet->id)->result();
-			}
-            
-			$this->render_page('theme/auth/index', $this->data);
+		
+			
+            $this->data['fleets'] = $this->fleet_model->get_fleets();
+			
+			$this->render_page('theme/fleet/fleets', $this->data);
 		
 	}
+
 
 
 
@@ -193,7 +189,7 @@ class Fleet extends CI_Controller {
 
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
         {
-            redirect('auth', 'refresh');
+            redirect('auth/login', 'refresh');
         }
 
         // validate form input
@@ -210,29 +206,29 @@ class Fleet extends CI_Controller {
         {
  
             $fleet_data = array(
-                'type' => $this->input->post('type'),
+                'Type' => $this->input->post('type'),
                 'RegDate'  => $this->input->post('regdate'),
                 'RegNo'    => $this->input->post('regno'),
-                'make'      => $this->input->post('make'),
-                'model'      => $this->input->post('model'),
-                'cost'      => $this->input->post('cost'),
-                'driver'      => $this->input->post('driver'),
-                'renewal'      => $this->input->post('renewal')
+                'Make'      => $this->input->post('make'),
+                'Model'      => $this->input->post('model'),
+                'Cost'      => $this->input->post('cost'),
+                'DriverAsigned'      => $this->input->post('driver'),
+                'InsuranceDue'      => $this->input->post('renewal')
             );
         }
-        if ($this->form_validation->run() == true && $this->settings_model->create_fleet($fleet_data))
+        if ($this->form_validation->run() == true && $this->fleet_model->create_fleet($fleet_data))
         {
             // check to see if we are creating the object
             // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            redirect("settings/fleet_index", 'refresh');
+            redirect("fleet/fleets", 'refresh');
         }
         else
         {
             // display the create fleet form
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
+            $this->data['csrf'] = $this->_get_csrf_nonce();
             $this->data['type'] = array(
                 'name'  => 'type',
                 'id'    => 'type',
@@ -251,7 +247,7 @@ class Fleet extends CI_Controller {
             );
             $this->data['regdate'] = array(
                 'name'  => 'regdate',
-                'id'    => 'regdate',
+                'id'    => 'datepicker',
                 'type'  => 'text',
                 'value' => $this->form_validation->set_value('regdate'),
                 'class' => 'form-control'
@@ -287,13 +283,13 @@ class Fleet extends CI_Controller {
             );
             $this->data['renewal'] = array(
                 'name'  => 'renewal',
-                'id'    => 'renewal',
+                'id'    => 'altdatepicker',
                 'type'  => 'text',
                 'value' => $this->form_validation->set_value('renewal'),
                 'class' => 'form-control'
             );
 
-            $this->render_page('theme/settings/create_fleet', $this->data);
+            $this->render_page('theme/fleet/create_fleet', $this->data);
         }
     }
 
@@ -302,13 +298,9 @@ class Fleet extends CI_Controller {
 	{
 		$this->data['title'] = 'Edit Fleet';
 
-		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->settings_model->fleet()->row()->id == $id)))
-		{
-			redirect('fleet_index', 'refresh');
-		}
 
-		$fleet = $this->settings_model->fleet($id)->row();
-		$types=$this->settings_model->types()->result_array();
+		$fleet = $this->fleet_model->get_fleet($id)->row();
+		$types=$this->fleet_model->get_vehicle_types();
 		
 
 		// validate form input
@@ -334,45 +326,31 @@ class Fleet extends CI_Controller {
 			if ($this->form_validation->run() === TRUE)
 			{
 				$fleet_data = array(
-                'type' => $this->input->post('type'),
+                'Type' => $this->input->post('type'),
                 'RegDate'  => $this->input->post('regdate'),
                 'RegNo'    => $this->input->post('regno'),
-                'make'      => $this->input->post('make'),
-                'model'      => $this->input->post('model'),
-                'cost'      => $this->input->post('cost'),
-                'driver'      => $this->input->post('driver'),
-                'renewal'      => $this->input->post('renewal')
+                'Make'      => $this->input->post('make'),
+                'Model'      => $this->input->post('model'),
+                'Cost'      => $this->input->post('cost'),
+                'DriverAsigned'      => $this->input->post('driver'),
+                'InsuranceDue'      => $this->input->post('renewal')
                );
 
 			
 
 		// check to see if we are updating the vehicle
-			   if($this->settings_model->update($fleet->id, $data))
+			   if($this->fleet_model->update_fleet($fleet->ID, $fleet_data))
 			    {
 			    	// redirect them back to the admin page if admin, or to the base url if non admin
 				    $this->session->set_flashdata('message', $this->ion_auth->messages() );
-				    if ($this->ion_auth->is_admin())
-					{
-						redirect('fleet_index', 'refresh');
-					}
-					else
-					{
-						redirect('/', 'refresh');
-					}
-
+				   	redirect('fleet/fleets', 'refresh');
+					
 			    }
 			    else
 			    {
 			    	// redirect them back to the admin page if admin, or to the base url if non admin
 				    $this->session->set_flashdata('message', $this->ion_auth->errors() );
-				    if ($this->ion_auth->is_admin())
-					{
-						redirect('fleet_index', 'refresh');
-					}
-					else
-					{
-						redirect('/', 'refresh');
-					}
+				    redirect('fleet/edit_fleet/'.$fleet->ID, 'refresh');
 
 			    }
 
@@ -388,20 +366,14 @@ class Fleet extends CI_Controller {
 		// pass the fleet to the view
 		$this->data['fleet'] = $fleet;
 		$this->data['types'] = $types;
-		$this->data['currentGroups'] = $currentGroups;
+		
+        
 
-		$this->data['first_name'] = array(
-			'name'  => 'first_name',
-			'id'    => 'first_name',
-			'type'  => 'text',
-			'value' => $this->form_validation->set_value('first_name', $fleet->first_name),
-			'class' => 'form-control'
-		);
 		 $this->data['type'] = array(
                 'name'  => 'type',
                 'id'    => 'type',
                 'type'  => 'text',
-                'value' => $this->form_validation->set_value('type', $fleet->type),
+                'value' => $this->form_validation->set_value('type', $fleet->Type),
                 'placeholder'=>'Fleet type',
                 'class' => 'form-control'
             );
@@ -410,7 +382,7 @@ class Fleet extends CI_Controller {
                 'id'    => 'regno',
                  'placeholder'=>'Registration number',
                 'type'  => 'text',
-                'value' => $this->form_validation->set_value('regno', $fleet->Regno),
+                'value' => $this->form_validation->set_value('regno', $fleet->RegNo),
                 'class' => 'form-control'
             );
             $this->data['regdate'] = array(
@@ -425,41 +397,56 @@ class Fleet extends CI_Controller {
                 'id'    => 'make',
                 'type'  => 'text',
                 'placeholder'=>'Fleet make',
-                'value' => $this->form_validation->set_value('make', $fleet->make),
+                'value' => $this->form_validation->set_value('make', $fleet->Make),
                 'class' => 'form-control'
             );
             $this->data['model'] = array(
                 'name'  => 'model',
                 'id'    => 'model',
                 'type'  => 'text',
-                'value' => $this->form_validation->set_value('model', $fleet->model),
+                'value' => $this->form_validation->set_value('model', $fleet->Model),
                 'class' => 'form-control'
             );
             $this->data['cost'] = array(
                 'name'  => 'cost',
                 'id'    => 'cost',
                 'type'  => 'text',
-                'value' => $this->form_validation->set_value('cost', $fleet->Regno),
+                'value' => $this->form_validation->set_value('cost', $fleet->Cost),
                 'class' => 'form-control'
             );
             $this->data['driver'] = array(
                 'name'  => 'driver',
                 'id'    => 'driver',
                 'type'  => 'text',
-                'value' => $this->form_validation->set_value('driver'),
+                'value' => $this->form_validation->set_value('driver', $fleet->DriverAsigned),
                 'class' => 'form-control'
             );
             $this->data['renewal'] = array(
                 'name'  => 'renewal',
                 'id'    => 'renewal',
                 'type'  => 'text',
-                'value' => $this->form_validation->set_value('renewal'),
+                'value' => $this->form_validation->set_value('renewal',$fleet->InsuranceDue),
                 'class' => 'form-control'
             );
 
 
-		$this->render_page('theme/auth/edit_fleet', $this->data);
+		$this->render_page('theme/fleet/edit_fleet', $this->data);
 	}
+
+  public function delete_fleet($id='')
+  {
+     
+       if(isset($id)){
+          $isFleetDeleted=$this->fleet_model->delete_fleet($id);
+          if($isFleetDeleted==TRUE){
+            $this->data['message']="fleet successfuly deleted";
+            redirect('fleet/fleets',$this->data);
+          }
+       }
+  }
+
+
+
 
 	
 

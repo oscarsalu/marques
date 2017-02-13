@@ -44,6 +44,9 @@
       $('#datepicker').datepicker({
       autoclose: true
     });
+        $('#altdatepicker').datepicker({
+      autoclose: true
+    });
   });
 
 
