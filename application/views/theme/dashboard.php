@@ -12,13 +12,25 @@
         <div class="box-body">
             <?php echo $message;?>
            <div id="map"></div>
-            <div id="bar">
-              <p class="auto"><input type="text" id="autoc"/></p>
-              <p><a id="clear" href="#">Click here</a> to clear map.</p>
-            </div>
+   
             <p>Hope you enjoy all of the work we have put into this. </p>
         </div><!-- /.box-body -->
     </div><!--box box-success-->
           </div>
           </div>
        </section>
+ <script>
+      function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_7nUlhzKNlZAnbwo3z1imtISnLKAk52I&callback=initMap">
+    </script>

@@ -22,10 +22,27 @@
   
 </head>
 <style type="text/css">
+
   .dataTables_filter {
    width: 100%;
    float: right;
    text-align: right;
 }
+.table-bordered,.table-bordered>tbody>tr>td,.table-bordered>thead>tr>th{
+  border: 1px solid #3c8dbc;
+}
+.loader {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: url('page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+}
+.form-control{
+  border: 1px solid #3c8dbc;
+}
 </style>
+
 

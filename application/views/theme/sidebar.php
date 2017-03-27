@@ -124,8 +124,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-           <li><a href="../UI/icons.html"><i class="fa fa-circle-o"></i> suppliers</a></li>
-            <li><a href="../UI/buttons.html"><i class="fa fa-circle-o"></i>Stocks</a></li>
+           <li><a href="<?= site_url('stock/suppliers') ?>"><i class="fa fa-circle-o"></i> suppliers</a></li>
+            <li><a href="<?= site_url('stock/stock_items') ?>"><i class="fa fa-circle-o"></i>Stocks</a></li>
             <li><a href="../UI/sliders.html"><i class="fa fa-circle-o"></i> Stock codes</a></li>
             </ul>
             </li>
@@ -138,8 +138,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-         <li><a href="<?= site_url('auth/index') ?>"><i class="fa fa-fire"></i> <span>Fuel records</span> </a></li>
-           <li><a href="../UI/modals.html"><i class="fa fa-fire"></i>Fuel Stations</a></li>
+         <li><a href="<?= site_url('fuel/fuel_records') ?>"><i class="fa fa-fire"></i> <span>Fuel records</span> </a></li>
+           <li><a href="<?= site_url('fuel/fuel_stations') ?>"><i class="fa fa-fire"></i>Fuel Stations</a></li>
          </ul>
          </li>
             <li class="treeview">
