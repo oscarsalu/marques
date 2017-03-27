@@ -164,8 +164,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-           <li><a href="../UI/modals.html"><i class="fa fa-umbrella"></i>Insurance companies</a></li>
-          <li><a href="<?= site_url('auth/index') ?>"><i class="fa fa-refresh"></i> <span>Renenewals</span> </a></li>
+           <li><a href="<?= site_url('insurance/index') ?>"><i class="fa fa-umbrella"></i>Insurance companies</a></li>
+          <li><a href="<?= site_url('insurance/renewal') ?>"><i class="fa fa-refresh"></i> <span>Renenewals</span> </a></li>
           <li><a href="<?= site_url('auth/index') ?>"><i class="fa fa-users"></i> <span>Accident records</span> </a></li>
           <li><a href="<?= site_url('auth/index') ?>"><i class="fa fa-users"></i> <span>Insurance Claims</span> </a></li>
          </ul>
