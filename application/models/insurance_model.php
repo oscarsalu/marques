@@ -49,75 +49,27 @@ class Insurance_model extends CI_Model {
 
        public function create_renewal($data)
         {
-            if($this->db->insert('rnewalmastertabl', $data)){
+            if($this->db->insert('rnewalmastertable', $data)){
                 return true;
             }
             return false;
         }
-      public function get_fleet($id)
+      public function edit_renewal($id)
       { 
-          return $this->db->get_where('vehiclemaster', array('ID'=>$id));     
+          return $this->db->get_where('rnewalmastertable', array('ID'=>$id));     
       }
-
-       //update a particular record of vehicle type
-     public function update_fleet($id, $data)
+     public function update_renewal($id, $data)
      {
         $this->db->where('ID', $id);
-        if ($this->db->update('vehiclemaster', $data)) {
+        if ($this->db->update('rnewalmastertable', $data)) {
            return TRUE;
         }
         return FALSE;
      }
-      //delete a record of vehicle type
-     public function delete_fleet($id='')
+     public function delete_renewal($id)
      {
          $this->db->where('ID', $id);
-        if ($this->db->delete('vehiclemaster')) {
-           return TRUE;
-        }
-        return FALSE;
-     }
-
-
-  /***************************************end of fleet *************************************************/
-  /******CRUD OPERATIONS OF THE driver OBJECT ***************************************************************************************/
-
-// get the drivers 
-        public function get_drivers()
-        {
-                $query = $this->db->get('drivers');
-                return $query->result();
-        }
-
-        // store the driver  object
-        public function create_driver($data)
-        {
-            if($this->db->insert('drivers', $data)){
-                return true;
-            }
-            return false;
-        }
-
-        // return a particular driver 
-      public function get_driver($id)
-      { 
-          return $this->db->get_where('drivers', array('id'=>$id));     
-      }
-
-       //update a particular record of drivers
-     public function update_driver($id, $data)
-     {
-        $this->db->where('id', $id);
-        if ($this->db->update('drivers', $data)) {
-           return TRUE;
-        }
-        return FALSE;
-     }
-      //delete a record of vehicle type
-     public function delete_driver($id='')
-     {
-         $this->db->where('id', $id);
-        if ($this->db->delete('drivers')) {
+        if ($this->db->delete('rnewalmastertable')) {
            return TRUE;
         }
         return FALSE;

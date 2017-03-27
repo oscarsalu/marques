@@ -1,10 +1,12 @@
+
 <!-- Main content -->
     <section class="content">
-
-      <!-- Default box -->
+      <div class="row">
+        <div class="col-xs-12">
+        <?= form_open(uri_string(), 'class="form-horizontal"') ?>
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Insurance Renewal</h3>
+          <h3 class="box-title">Edit Insurance Renewal</h3>
 <div class="box-tools pull-right">
                  <div class="btn-group">
                     <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"  title="vtypes">Insurance
@@ -29,8 +31,8 @@
           </div>
         </div>
         <div class="box-body">
-<div id="infoMessage"><?php echo $message;?></div>
-        <?php echo form_open("insurance/create_renawal");?>
+
+    <?php echo form_open("insurance/edit_renewal");?>
                <div class="form-group">
                   <label for="renewal" class="col-sm-2 control-label">Renewal<span style="color:red">*</span></label>
 
@@ -38,18 +40,20 @@
                     <?php echo form_input($renewal);?><span><?= form_error('renewal'); ?></span>
                   </div>
                </div>
-   
+              
       <?php echo form_hidden($csrf); ?>
+       <?php echo form_hidden('id', $renewal_data->ID);?>
       </div>
      <div class="box-footer">
      <button type="reset" class="btn btn-xs btn-danger pull-left"> cancel </button>
          <?php echo form_submit('submit', 'Save','class="btn btn-xs btn-success pull-right"');?>
         </div>
 
-<?php echo form_close();?>
 
             </div><!-- /.box-body -->
            </div><!--box box-success-->
+           <?php echo form_close();?>
+
           </div>
           </div>
        </section>
