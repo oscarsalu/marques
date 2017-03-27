@@ -170,114 +170,43 @@ class Insurance extends CI_Controller {
 
 	
 	
-	// create a new fleet object
-	public function create_fleet()
+	 public function create_renawal()
     {
-        $this->data['title'] ='create fleet' ;
+        $this->data['title'] ='Renewal' ;
 
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
-        {
-            redirect('auth/login', 'refresh');
-        }
-
-        // validate form input
-        $this->form_validation->set_rules('type', 'Fleet type', 'required');
-        $this->form_validation->set_rules('regdate', 'Registration date', 'required');
-        $this->form_validation->set_rules('regno', 'Registration Number', 'required');
-        $this->form_validation->set_rules('make', 'Fleet make', 'trim');
-        $this->form_validation->set_rules('model', 'Fleet model', 'trim');
-        $this->form_validation->set_rules('cost', 'fleet cost', 'trim');
-        $this->form_validation->set_rules('driver', 'Driver', 'trim');
-        $this->form_validation->set_rules('renewal', ' Insurance Renewal Date', 'required');
+        $this->form_validation->set_rules('renewal', 'Renewal', 'required');
+       
 
         if ($this->form_validation->run() == true)
         {
  
-            $fleet_data = array(
-                'Type' => $this->input->post('type'),
-                'RegDate'  => $this->input->post('regdate'),
-                'RegNo'    => $this->input->post('regno'),
-                'Make'      => $this->input->post('make'),
-                'Model'      => $this->input->post('model'),
-                'Cost'      => $this->input->post('cost'),
-                'DriverAsigned'      => $this->input->post('driver'),
-                'InsuranceDue'      => $this->input->post('renewal')
+            $renewal_data = array(
+                'renewal' => $this->input->post('renewal')
+              
             );
         }
-        if ($this->form_validation->run() == true && $this->fleet_model->create_fleet($fleet_data))
+        if ($this->form_validation->run() == true && $this->insurance_model->create_renewal($renewal_data))
         {
-            // check to see if we are creating the object
-            // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            redirect("fleet/fleets", 'refresh');
+            $this->index();
         }
         else
         {
             // display the create fleet form
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-            $this->data['csrf'] = $this->_get_csrf_nonce();
-            $this->data['type'] = array(
-                'name'  => 'type',
-                'id'    => 'type',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('type'),
-                'placeholder'=>'Fleet type',
-                'class' => 'form-control'
-            );
-            $this->data['regno'] = array(
-                'name'  => 'regno',
-                'id'    => 'regno',
-                 'placeholder'=>'Registration number',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('regno'),
-                'class' => 'form-control'
-            );
-            $this->data['regdate'] = array(
-                'name'  => 'regdate',
-                'id'    => 'datepicker',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('regdate'),
-                'class' => 'form-control'
-            );
-            $this->data['make'] = array(
-                'name'  => 'make',
-                'id'    => 'make',
-                'type'  => 'text',
-                'placeholder'=>'Fleet make',
-                'value' => $this->form_validation->set_value('make'),
-                'class' => 'form-control'
-            );
-            $this->data['model'] = array(
-                'name'  => 'model',
-                'id'    => 'model',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('model'),
-                'class' => 'form-control'
-            );
-            $this->data['cost'] = array(
-                'name'  => 'cost',
-                'id'    => 'cost',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('cost'),
-                'class' => 'form-control'
-            );
-            $this->data['driver'] = array(
-                'name'  => 'driver',
-                'id'    => 'driver',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('driver'),
-                'class' => 'form-control'
-            );
+               $this->data['csrf'] = $this->_get_csrf_nonce();
             $this->data['renewal'] = array(
                 'name'  => 'renewal',
-                'id'    => 'altdatepicker',
+                'id'    => 'renewal',
                 'type'  => 'text',
-                'value' => $this->form_validation->set_value('renewal'),
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'Renewal',
                 'class' => 'form-control'
             );
+           
 
-            $this->render_page('theme/fleet/create_fleet', $this->data);
+            $this->render_page('theme/insurance/renewal_create', $this->data);
         }
     }
 

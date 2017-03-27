@@ -47,16 +47,13 @@ class Insurance_model extends CI_Model {
                 return $query->result();
         }
 
-        // store the vehicle  object
-        public function create_fleet($data)
+       public function create_renewal($data)
         {
-            if($this->db->insert('vehiclemaster', $data)){
+            if($this->db->insert('rnewalmastertabl', $data)){
                 return true;
             }
             return false;
         }
-
-        // return a particular vehicle 
       public function get_fleet($id)
       { 
           return $this->db->get_where('vehiclemaster', array('ID'=>$id));     
