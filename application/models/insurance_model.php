@@ -112,4 +112,16 @@ class Insurance_model extends CI_Model {
        $query = $this->db->get('vehicletype');
                 return $query->result();
      }
+     public function get_claims()
+     {
+       $query = $this->db->get('insuranceclaims');
+                return $query->result();
+     }
+     public function record_claim()
+     {
+       if($this->db->insert('insuranceclaims', $data)){
+                return true;
+            }
+            return false;
+     }
 }

@@ -33,7 +33,7 @@
                   <label for="fleet" class="col-sm-2 control-label">Fleet<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                     <select class="form-control">
+                     <select class="form-control" name="fleet">
                      <option>--select Fleet type</option>
                      <?php foreach ($fleet_type as $fleet) :?>
                        <option value="<?= $fleet->FleetType?>"><?= $fleet->FleetType?></option>
@@ -41,12 +41,18 @@
                      </select>
                   </div>
                </div>
-      
-              <div class="form-group">
+               <div class="form-group">
                   <label for="vehicle" class="col-sm-2 control-label">Vehicle<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <select class="form-control">
+                    <?php echo form_input($vehicle);?><span><?= form_error('vehicle'); ?></span>
+                  </div>
+               </div>
+              <div class="form-group">
+                  <label for="type" class="col-sm-2 control-label">Type<span style="color:red">*</span></label>
+
+                  <div class="col-sm-10">
+                    <select class="form-control" name="type">
                      <option>--select Vehicle type</option>
                      <?php foreach ($vehicle_type as $vehicle) :?>
                        <option value="<?= $vehicle->VehicleType?>"><?= $vehicle->VehicleType?></option>
@@ -65,7 +71,7 @@
                   <label for="driver" class="col-sm-2 control-label">Driver<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <select class="form-control">
+                    <select class="form-control" name="driver">
                     <option value="">--Select Driver--</option>
                      <?php foreach ($driver as $driver) :?>
                        <option value="<?= $driver->name?>"><?= $fleet->FleetType?></option>
