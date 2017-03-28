@@ -7,7 +7,7 @@ class Insurance extends CI_Controller {
 		parent::__construct();
 		$this->load->database();
 		$this->load->library(array('ion_auth','form_validation'));
-		$this->load->helper(array('url','language'));
+		$this->load->helper(array('url','language','text'));
         $this->load->model('insurance_model');
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -270,8 +270,185 @@ class Insurance extends CI_Controller {
       redirect('insurance/renewal', $this->data);
      //$this->renewal();
   }
-	
+  public function accident()
+  {
+      $this->data['accident'] = $this->insurance_model->get_accident();
+      $this->render_page('theme/insurance/accident', $this->data);
+  }
+  public function details()
+  {
+      $id = $this->uri->segment(3);
+      $this->data['accident'] = $this->insurance_model->per_id($id);
+      $this->render_page('theme/insurance/accident_d', $this->data);
+  }
+	public function accident_c()
+    {
+        $this->data['title'] ='Record Accident' ;
 
+        $this->form_validation->set_rules('fleet', 'Fleet', 'required');
+        $this->form_validation->set_rules('vehicle', 'Vehicle', 'required');
+        $this->form_validation->set_rules('driver', 'Driver', 'required');
+        $this->form_validation->set_rules('details', 'Details', 'required');
+        $this->form_validation->set_rules('location', 'Location', 'required');
+        $this->form_validation->set_rules('status', 'status', 'required');
+
+        if ($this->form_validation->run() == true)
+        {
+
+        $config = array(
+            'upload_path' => "./uploads/",
+            'allowed_types' => "gif|jpg|png|jpeg|pdf",
+            'overwrite' => TRUE,
+            'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+            'max_height' => "768",
+            'max_width' => "1024"
+            );
+        $this->load->library('upload', $config);
+        if($this->insurance->accident_c('userImage'))
+            {
+            $imageUpload = array('upload_data' => $this->upload->data());
+            }
+            else
+            {
+            $imageUpload = array('error' => $this->upload->display_errors());
+        }
+ 
+            $accident_data = array(
+                'SysDate' => date('Y-m-d H:i:s'),
+                'Date' => $this->input->post('date'),
+                'Fleet' => $this->input->post('fleet'),
+                'Vehicle' => $this->input->post('vehicle'),
+                'Type' => $this->input->post('type'),
+                'Details' => $this->input->post('details'),
+                'Driver' => $this->input->post('driver'),
+                'Injured' => $this->input->post('injured'),
+                'Images' => $imageUpload,
+                'EnteredBy' => $this->input->post('enteredBy'),
+                'DamageToVehicle' => $this->input->post('damageto'),
+                'ThirdPartyDamages' => $this->input->post('partyDamages'),
+                'Time' => $this->input->post('time'),
+                'Deaths' => $this->input->post('deaths'),
+                'Location' => $this->input->post('location'),
+                'StatusInjured'=>$this->input->post('status'),
+                'Category'=>$this->input->post('category')
+              
+            );
+        }
+        if ($this->form_validation->run() == true && $this->insurance_model->record_accident($accident_data))
+        {
+            $this->session->set_flashdata('message', $this->ion_auth->messages());
+            $this->accident();
+        }
+        else
+        {
+            
+            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+               $this->data['csrf'] = $this->_get_csrf_nonce();
+               $this->data['fleet_type'] = $this->insurance_model->get_fleet();
+               $this->data['driver'] = $this->insurance_model->get_driver();
+               $this->data['vehicle_type'] = $this->insurance_model->get_vehicle();
+
+            $this->data['date'] = array(
+                'name'  => 'date',
+                'id'    => 'date',
+                'type'  => 'text',
+                'value' => date('Y-m-d H:i:s'),
+                'placeholder'=>'Date',
+                'class' => 'form-control'
+            );
+            $this->data['details'] = array(
+                'name'  => 'details',
+                'id'    => 'details',
+                'rows'        => '5',
+                'cols'        => '10',
+                'style'       => 'width:50%',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'Details of the accident',
+                'class' => 'form-control'
+            );
+            $this->data['injured'] = array(
+                'name'  => 'injured',
+                'id'    => 'injured',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'How many People are injured?',
+                'class' => 'form-control'
+            );
+            $this->data['images'] = array(
+                'name'  => 'userImage',
+                'id'    => 'userImage',
+                'type'  => 'file',
+                'class' => 'form-control'
+            );
+            $this->data['enteredBy'] = array(
+                'name'  => 'enteredBy',
+                'id'    => 'enteredBy',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'Enter Your Name',
+                'class' => 'form-control'
+            );
+            $this->data['damageto'] = array(
+                'name'  => 'damageto',
+                'id'    => 'damageto',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'Damage To the vehicle',
+                'class' => 'form-control'
+            );
+            $this->data['partyDamages'] = array(
+                'name'  => 'partyDamages',
+                'id'    => 'partyDamages',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'3rd Party Damages',
+                'class' => 'form-control'
+            );
+            $this->data['time'] = array(
+                'name'  => 'time',
+                'id'    => 'time',
+                'type'  => 'text',
+                'value' => date('H:m:s'),
+                'placeholder'=>'Time',
+                'class' => 'form-control'
+            );
+            $this->data['deaths'] = array(
+                'name'  => 'deaths',
+                'id'    => 'deaths',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'Number of Deaths',
+                'class' => 'form-control'
+            );
+            $this->data['location'] = array(
+                'name'  => 'location',
+                'id'    => 'location',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'Location Of The Accident',
+                'class' => 'form-control'
+            );
+            $this->data['status'] = array(
+                'name'  => 'status',
+                'id'    => 'status',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'Status of the Injured',
+                'class' => 'form-control'
+            );
+            $this->data['category'] = array(
+                'name'  => 'category',
+                'id'    => 'category',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'category',
+                'class' => 'form-control'
+            );
+           
+
+            $this->render_page('theme/insurance/accident_c', $this->data);
+        }
+    }
 	public function _get_csrf_nonce()
 	{
 		$this->load->helper('string');

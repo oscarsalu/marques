@@ -74,5 +74,42 @@ class Insurance_model extends CI_Model {
         }
         return FALSE;
      }
-
+     public function get_accident()
+     {
+        $query = $this->db->get('accidents');
+        if ($query->num_rows()>0) {
+          return $query->result();
+        }else
+        {
+          return array();
+        }
+     }
+     public function per_id($id)
+     {
+       $this->db->where('Id', $id);
+       $query=$this->db->get('accidents');
+       return $query->result();
+     }
+     public function record_accident()
+     {
+       if($this->db->insert('accidents', $data)){
+                return true;
+            }
+            return false;
+     }
+     public function get_fleet()
+     {
+       $query = $this->db->get('fleettype');
+                return $query->result();
+     }
+     public function get_driver()
+     {
+       $query = $this->db->get('drivers');
+                return $query->result();
+     }
+     public function get_vehicle()
+     {
+       $query = $this->db->get('vehicletype');
+                return $query->result();
+     }
 }
