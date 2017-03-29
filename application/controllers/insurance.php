@@ -351,6 +351,7 @@ class Insurance extends CI_Controller {
                $this->data['fleet_type'] = $this->insurance_model->get_fleet();
                $this->data['driver'] = $this->insurance_model->get_driver();
                $this->data['vehicle_type'] = $this->insurance_model->get_vehicle();
+               $this->data['vehicle_No'] = $this->insurance_model->get_vehicleNo();
 
             $this->data['date'] = array(
                 'name'  => 'date',
@@ -368,14 +369,6 @@ class Insurance extends CI_Controller {
                 'style'       => 'width:50%',
                 'value' => $this->form_validation->set_value('type'),
                 'placeholder'=>'Details of the accident',
-                'class' => 'form-control'
-            );
-            $this->data['vehicle'] = array(
-                'name'  => 'vehicle',
-                'id'    => 'vehicle',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('type'),
-                'placeholder'=>'Number Plate',
                 'class' => 'form-control'
             );
             $this->data['injured'] = array(
@@ -500,7 +493,7 @@ class Insurance extends CI_Controller {
                $this->data['csrf'] = $this->_get_csrf_nonce();
                $this->data['fleet_type'] = $this->insurance_model->get_fleet();
                $this->data['driver'] = $this->insurance_model->get_driver();
-               $this->data['vehicle_type'] = $this->insurance_model->get_vehicle();
+               $this->data['vehicle_No'] = $this->insurance_model->get_vehicleNo();
 
             $this->data['date'] = array(
                 'name'  => 'date',
@@ -508,14 +501,6 @@ class Insurance extends CI_Controller {
                 'type'  => 'text',
                 'value' => date('Y-m-d H:i:s'),
                 'placeholder'=>'Date',
-                'class' => 'form-control'
-            );
-            $this->data['vehicleNo'] = array(
-                'name'  => 'vehicleNo',
-                'id'    => 'vehicleNo',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('type'),
-                'placeholder'=>'The Number Plate of the vehicle?',
                 'class' => 'form-control'
             );
             $this->data['accidentDate'] = array(

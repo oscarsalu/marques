@@ -7,12 +7,12 @@
           <h2 class="box-title">Record  Accident</h2>
 <div class="box-tools pull-right">
                  <div class="btn-group">
-                    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"  title="vtypes">Accident
+                    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"  title="vtypes">Maintaince
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="<?= site_url('insurance/accident_c'); ?>"><i class="fa fa-plus"></i>Record An Accident</a></li>
+                    <li><a href="<?= site_url('maintainance/maintaincreate'); ?>"><i class="fa fa-plus"></i>Record Maintainace</a></li>
                    
                   </ul>
                 </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="box-body">
 <div id="infoMessage"><?php echo $message;?></div>
-        <?php echo form_open_multipart("insurance/accident_c");?>
+        <?php echo form_open_multipart("maintainance/maintaincreate");?>
 
                 <div class="form-group">
                   <label for="date" class="col-sm-2 control-label">Date<span style="color:red">*</span></label>
@@ -42,7 +42,7 @@
                   </div>
                </div>
                <div class="form-group">
-                  <label for="vehicle" class="col-sm-2 control-label">Vehicle<span style="color:red">*</span></label>
+                  <label for="vehicleNo" class="col-sm-2 control-label">Vehicle<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
                     <select class="form-control" name="vehicleNo">
@@ -66,37 +66,30 @@
                   </div>
                </div>
                <div class="form-group">
-                  <label for="details" class="col-sm-2 control-label">Details<span style="color:red">*</span></label>
+                  <label for="Remarks" class="col-sm-2 control-label">Remarks<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <?php echo form_textarea($details);?><span><?= form_error('details'); ?></span>
+                    <?php echo form_textarea($Remarks);?><span><?= form_error('Remarks'); ?></span>
                   </div>
                </div>
                <div class="form-group">
-                  <label for="driver" class="col-sm-2 control-label">Driver<span style="color:red">*</span></label>
+                  <label for="Supplier" class="col-sm-2 control-label">Supplier<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <select class="form-control" name="driver">
-                    <option value="">--Select Driver--</option>
-                     <?php foreach ($driver as $driver) :?>
-                       <option value="<?= $driver->name?>"><?= $driver->name?></option>
+                    <select class="form-control" name="supplier">
+                    <option value="">--Select supplier--</option>
+                     <?php foreach ($supplier as $s) :?>
+                       <option value="<?= $s->SupplierName?>"><?= $s->SupplierName?></option>
                      <?php endforeach ?>
                      </select>
                   </div>
                </div>
       
               <div class="form-group">
-                  <label for="injured" class="col-sm-2 control-label">Injured<span style="color:red">*</span></label>
+                  <label for="cost" class="col-sm-2 control-label">Cost<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <?php echo form_input($injured);?><span><?= form_error('injured'); ?></span>
-                  </div>
-               </div>
-               <div class="form-group">
-                  <label for="images" class="col-sm-2 control-label">Images<span style="color:red">*</span></label>
-
-                  <div class="col-sm-10">
-                    <?php echo form_input($images);?><span><?= form_error('images'); ?></span>
+                    <?php echo form_input($cost);?><span><?= form_error('cost'); ?></span>
                   </div>
                </div>
                <div class="form-group">
@@ -106,55 +99,45 @@
                     <?php echo form_input($enteredBy);?><span><?= form_error('enteredBy'); ?></span>
                   </div>
                </div>
-      
-              <div class="form-group">
-                  <label for="damageto" class="col-sm-2 control-label">Damage To Vehicle<span style="color:red">*</span></label>
+               <div class="form-group">
+                  <label for="approval" class="col-sm-2 control-label">Approval<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <?php echo form_input($damageto);?><span><?= form_error('damageto'); ?></span>
+                    <?php echo form_input($approval);?><span><?= form_error('approval'); ?></span>
                   </div>
                </div>
                <div class="form-group">
-                  <label for="3rdparty" class="col-sm-2 control-label">3rd Party Damages<span style="color:red">*</span></label>
+                  <label for="meter" class="col-sm-2 control-label">MeterReading<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <?php echo form_input($partyDamages);?><span><?= form_error('partyDamages'); ?></span>
-                  </div>
-               </div>
-               <div class="form-group">
-                  <label for="time" class="col-sm-2 control-label">Time<span style="color:red">*</span></label>
-
-                  <div class="col-sm-10">
-                    <?php echo form_input($time);?><span><?= form_error('time'); ?></span>
+                    <?php echo form_input($meter);?><span><?= form_error('meter'); ?></span>
                   </div>
                </div>
       
               <div class="form-group">
-                  <label for="death" class="col-sm-2 control-label">Number Of Deaths<span style="color:red">*</span></label>
+                  <label for="Acciref" class="col-sm-2 control-label">Accident Ref<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <?php echo form_input($deaths);?><span><?= form_error('deaths'); ?></span>
+                    <?php echo form_input($acciref);?><span><?= form_error('acciref'); ?></span>
                   </div>
                </div>
                <div class="form-group">
-                  <label for="location" class="col-sm-2 control-label">Location Of accident<span style="color:red">*</span></label>
+                  <label for="voucher" class="col-sm-2 control-label">Payment Voucher<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <?php echo form_input($location);?><span><?= form_error('location'); ?></span>
+                    <?php echo form_input($voucher);?><span><?= form_error('voucher'); ?></span>
                   </div>
                </div>
                <div class="form-group">
-                  <label for="status" class="col-sm-2 control-label">Status Of the Injured<span style="color:red">*</span></label>
+                  <label for="Maintype" class="col-sm-2 control-label">Maintainance Type<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <?php echo form_input($status);?><span><?= form_error('status'); ?></span>
-                  </div>
-               </div>
-               <div class="form-group">
-                  <label for="category" class="col-sm-2 control-label">Category<span style="color:red">*</span></label>
-
-                  <div class="col-sm-10">
-                    <?php echo form_input($category);?><span><?= form_error('category'); ?></span>
+                    <select class="form-control" name="Maintype">
+                    <option value="">--Select Maintainance type--</option>
+                     <?php foreach ($maintype as $ty) :?>
+                       <option value="<?= $ty->MaintType?>"><?= $s->SupplierName?></option>
+                     <?php endforeach ?>
+                     </select>
                   </div>
                </div>
       

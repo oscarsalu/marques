@@ -1,5 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Insurance_model extends CI_Model {
+class Maintainance_model extends CI_Model {
 
   
         public function __construct()
@@ -9,14 +9,14 @@ class Insurance_model extends CI_Model {
         }
 
 
-        public function get_insurance()
+        public function get_maintainance()
         {
-                $query = $this->db->get('insurancecompany');
+                $query = $this->db->get('maintenenace');
                 return $query->result();
         }
         public function create($data)
         {
-            if($this->db->insert('insurancecompany', $data)){
+            if($this->db->insert('maintenenace', $data)){
                 return true;
             }
             return false;

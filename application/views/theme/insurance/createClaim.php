@@ -68,7 +68,12 @@
                   <label for="vehicleNo" class="col-sm-2 control-label">Vehicle Number<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <?php echo form_input($vehicleNo);?><span><?= form_error('vehicleNo'); ?></span>
+                    <select class="form-control" name="vehicleNo">
+                     <option>--select Vehicle Number</option>
+                     <?php foreach ($vehicle_No as $vehicle) :?>
+                       <option value="<?= $vehicle->RegNo?>"><?= $vehicle->RegNo?></option>
+                     <?php endforeach ?>
+                     </select>
                   </div>
                </div>
                <div class="form-group">
