@@ -51,7 +51,7 @@ class Maintainance extends CI_Controller {
                 'MaintType' => $this->input->post('Maintype')
             );
         }
-        if ($this->form_validation->run() == true && $this->maintainance_model->record_maintain($maintain_data))
+        if ($this->form_validation->run() == true && $this->maintainance_model->create($maintain_data))
         {
             $this->session->set_flashdata('message', $this->ion_auth->messages());
             $this->accident();
@@ -65,6 +65,7 @@ class Maintainance extends CI_Controller {
                $this->data['driver'] = $this->insurance_model->get_driver();
                $this->data['vehicle_type'] = $this->insurance_model->get_vehicle();
                $this->data['vehicle_No'] = $this->insurance_model->get_vehicleNo();
+               $this->data['supplier'] = $this->maintainance_model->get_supplier();
 
             $this->data['date'] = array(
                 'name'  => 'date',
@@ -133,7 +134,7 @@ class Maintainance extends CI_Controller {
             );
            
 
-            $this->render_page('theme/insurance/accident_c', $this->data);
+            $this->render_page('theme/repair/create', $this->data);
         }
     }
     public function edit($id)
@@ -216,121 +217,6 @@ class Maintainance extends CI_Controller {
      }
       $this->index();
    }
-
-	
-    public function createClaim()
-    {
-        $this->data['title'] ='Record Accident' ;
-
-        $this->form_validation->set_rules('fleet', 'Fleet', 'required');
-        $this->form_validation->set_rules('cash', 'Claim', 'required');
-        $this->form_validation->set_rules('accidentDate', 'Accident Date', 'required');
-        $this->form_validation->set_rules('Reciept', 'Reciept Number', 'required');
-
-        if ($this->form_validation->run() == true)
-        {
-        
-            $claim_data = array(
-                'SysDate' => date('Y-m-d H:i:s'),
-                'Fleet' => $this->input->post('fleet'),
-                'Type' => $this->input->post('type'),
-                'VehicleNo' => $this->input->post('vehicleNo'),
-                'AccidentDate' => $this->input->post('accidentDate'),
-                'Claim' => $this->input->post('cash'),
-                'EnteredBy' => $this->input->post('enteredBy'),
-                'ReceiptNo' => $this->input->post('Reciept'),
-                'Remarks' => $this->input->post('remarks'),
-                'insurer' => $this->input->post('insurer'),
-                'Date' => $this->input->post('dateit')
-              
-            );
-        }
-        if ($this->form_validation->run() == true && $this->insurance_model->record_claim($claim_data))
-        {
-            $this->session->set_flashdata('message', $this->ion_auth->messages());
-            $this->accident();
-        }
-        else
-        {
-            
-            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-               $this->data['csrf'] = $this->_get_csrf_nonce();
-               $this->data['fleet_type'] = $this->insurance_model->get_fleet();
-               $this->data['driver'] = $this->insurance_model->get_driver();
-               $this->data['vehicle_No'] = $this->insurance_model->get_vehicleNo();
-
-            $this->data['date'] = array(
-                'name'  => 'date',
-                'id'    => 'date',
-                'type'  => 'text',
-                'value' => date('Y-m-d H:i:s'),
-                'placeholder'=>'Date',
-                'class' => 'form-control'
-            );
-            $this->data['accidentDate'] = array(
-                'name'  => 'accidentDate',
-                'id'    => 'accidentDate',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('type'),
-                'placeholder'=>'When Was the accident?',
-                'class' => 'form-control'
-            );
-            $this->data['enteredBy'] = array(
-                'name'  => 'enteredBy',
-                'id'    => 'enteredBy',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('type'),
-                'placeholder'=>'Enter Your Name',
-                'class' => 'form-control'
-            );
-            $this->data['cash'] = array(
-                'name'  => 'cash',
-                'id'    => 'cash',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('type'),
-                'placeholder'=>'How much is the insurance Claim?',
-                'class' => 'form-control'
-            );
-            $this->data['Reciept'] = array(
-                'name'  => 'Reciept',
-                'id'    => 'Reciept',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('type'),
-                'placeholder'=>'Reciept',
-                'class' => 'form-control'
-            );
-            $this->data['insurer'] = array(
-                'name'  => 'insurer',
-                'id'    => 'insurer',
-                'type'  => 'text',
-                'value' => date('H:m:s'),
-                'value' => $this->form_validation->set_value('type'),
-                'placeholder'=>'insurer',
-                'class' => 'form-control'
-            );
-            $this->data['dateit'] = array(
-                'name'  => 'dateit',
-                'id'    => 'dateit',
-                'type'  => 'datetime-local',
-                'value' => $this->form_validation->set_value('type'),
-                'placeholder'=>'Date Of the Accident',
-                'class' => 'form-control'
-            );
-            $this->data['remarks'] = array(
-                'name'  => 'remarks',
-                'id'    => 'remarks',
-                'rows'        => '5',
-                'cols'        => '10',
-                'style'       => 'width:50%',
-                'value' => $this->form_validation->set_value('type'),
-                'placeholder'=>'Few remarks',
-                'class' => 'form-control'
-            );
-           
-
-            $this->render_page('theme/insurance/createClaim', $this->data);
-        }
-    }
 	public function _get_csrf_nonce()
 	{
 		$this->load->helper('string');
