@@ -134,8 +134,8 @@
                   <div class="col-sm-10">
                     <select class="form-control" name="Maintype">
                     <option value="">--Select Maintainance type--</option>
-                     <?php foreach ($maintype as $ty) :?>
-                       <option value="<?= $ty->MaintType?>"><?= $s->SupplierName?></option>
+                     <?php foreach ($maintatype as $ty) :?>
+                       <option value="<?= $ty->Type?>"><?= $ty->Type?></option>
                      <?php endforeach ?>
                      </select>
                   </div>

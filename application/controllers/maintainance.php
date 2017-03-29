@@ -66,6 +66,7 @@ class Maintainance extends CI_Controller {
                $this->data['vehicle_type'] = $this->insurance_model->get_vehicle();
                $this->data['vehicle_No'] = $this->insurance_model->get_vehicleNo();
                $this->data['supplier'] = $this->maintainance_model->get_supplier();
+               $this->data['maintatype'] = $this->maintainance_model->get_maintype();
 
             $this->data['date'] = array(
                 'name'  => 'date',

@@ -25,5 +25,9 @@ class Maintainance_model extends CI_Model {
         {
                 $query = $this->db->get('suppliermaster');
                 return $query->result();
+        }public function get_maintype()
+        {
+                $query = $this->db->get('servicetypemaster');
+                return $query->result();
         }
 }
