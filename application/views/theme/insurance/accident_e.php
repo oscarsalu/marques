@@ -1,10 +1,11 @@
 <!-- Main content -->
     <section class="content">
-
-      <!-- Default box -->
+      <div class="row">
+        <div class="col-xs-12">
+        <?= form_open(uri_string(), 'class="form-horizontal"') ?>
       <div class="box box-success">
         <div class="box-header with-border">
-          <h2 class="box-title">Record  Accident</h2>
+          <h3 class="box-title">Edit Accidents</h3>
 <div class="box-tools pull-right">
                  <div class="btn-group">
                     <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"  title="vtypes">Accident
@@ -19,8 +20,7 @@
           </div>
         </div>
         <div class="box-body">
-<div id="infoMessage"><?php echo $message;?></div>
-        <?php echo form_open_multipart("insurance/accident_c");?>
+        <?php echo form_open("insurance/accident_e");?>
 
                 <div class="form-group">
                   <label for="date" class="col-sm-2 control-label">Date<span style="color:red">*</span></label>
@@ -33,22 +33,26 @@
                   <label for="fleet" class="col-sm-2 control-label">Fleet<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                     <select class="form-control" name="fleet">
+                     <select class="form-control" name="fleet1">
                      <option>--select Fleet type--</option>
                      <?php foreach ($fleet_type as $fleet) :?>
-                       <option value="<?= $fleet->FleetType?>"><?= $fleet->FleetType?></option>
+                       <option value="<?= $fleet->FleetType?>" <?php if ($accid_data->Fleet ===  $fleet->FleetType ): ?>
+                       <?php echo "Selected" ?>
+                       <?php endif ?>><?= $fleet->FleetType?></option>
                      <?php endforeach ?>
                      </select>
                   </div>
                </div>
                <div class="form-group">
-                  <label for="vehicle" class="col-sm-2 control-label">Vehicle<span style="color:red">*</span></label>
+                  <label for="vehicle" class="col-sm-2 control-label">Vehicle</label>
 
                   <div class="col-sm-10">
-                    <select class="form-control" name="vehicle">
+                    <select class="form-control" name="vehicleNo">
                      <option>--select Vehicle Number--</option>
                      <?php foreach ($vehicle_No as $vehicle) :?>
-                       <option value="<?= $vehicle->RegNo?>"><?= $vehicle->RegNo?></option>
+                       <option value="<?= $vehicle->RegNo?>" <?php if ($accid_data->Vehicle ===  $vehicle->RegNo ): ?>
+                       <?php echo "Selected" ?>
+                       <?php endif ?>><?= $vehicle->RegNo?></option>
                      <?php endforeach ?>
                      </select>
                   </div>
@@ -57,10 +61,12 @@
                   <label for="type" class="col-sm-2 control-label">Type<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <select class="form-control" name="type">
+                    <select class="form-control" name="type1">
                      <option>--select Vehicle type--</option>
                      <?php foreach ($vehicle_type as $vehicle) :?>
-                       <option value="<?= $vehicle->VehicleType?>"><?= $vehicle->VehicleType?></option>
+                       <option value="<?= $vehicle->VehicleType?>" <?php if ($accid_data->Type ===  $vehicle->VehicleType ): ?>
+                       <?php echo "Selected" ?>
+                       <?php endif ?>><?= $vehicle->VehicleType?></option>
                      <?php endforeach ?>
                      </select>
                   </div>
@@ -76,10 +82,12 @@
                   <label for="driver" class="col-sm-2 control-label">Driver<span style="color:red">*</span></label>
 
                   <div class="col-sm-10">
-                    <select class="form-control" name="driver">
+                    <select class="form-control" name="driver1">
                     <option value="">--Select Driver--</option>
                      <?php foreach ($driver as $driver) :?>
-                       <option value="<?= $driver->name?>"><?= $driver->name?></option>
+                       <option value="<?= $driver->name?>"<?php if ($accid_data->Driver === $driver->name ): ?>
+                       <?php echo "Selected" ?>
+                       <?php endif ?> ><?= $driver->name?></option>
                      <?php endforeach ?>
                      </select>
                   </div>
@@ -90,13 +98,6 @@
 
                   <div class="col-sm-10">
                     <?php echo form_input($injured);?><span><?= form_error('injured'); ?></span>
-                  </div>
-               </div>
-               <div class="form-group">
-                  <label for="images" class="col-sm-2 control-label">Images<span style="color:red">*</span></label>
-
-                  <div class="col-sm-10">
-                    <?php echo form_input($images);?><span><?= form_error('images'); ?></span>
                   </div>
                </div>
                <div class="form-group">
@@ -160,6 +161,7 @@
       
    
       <?php echo form_hidden($csrf); ?>
+      <?php echo form_hidden('id', $accid_data->Id);?>
       </div>
      <div class="box-footer">
      <button type="reset" class="btn btn-xs btn-danger pull-left"> cancel </button>

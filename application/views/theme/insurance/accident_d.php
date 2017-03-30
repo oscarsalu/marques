@@ -21,10 +21,10 @@
         <div class="box-body">
         <div id="kotak">
           <?php foreach ($accident as $accident):?>
-            <h1>Date: <small> <?php echo $accident->SysDate; ?></small></h1>
-            <h3>Vehicle: <small> <?php echo $accident->Vehicle; ?></small></h3>
-            <h4>Driver: <?php echo $accident->Driver; ?></h4>
-            <h5>Type: <?php echo $accident->Type; ?></h5>
+            <h2>Date: <small><?php echo $accident->SysDate;?></small></h2>
+            <h3>Vehicle: <small><?php echo $accident->Vehicle;?></small></h3>
+            <h3>Driver: <small><?php echo $accident->Driver;?></small></h3>
+            <p>Type: <?php echo $accident->Type; ?></p>
             <p>Fleet: <?php echo $accident->Fleet; ?></p>
             <p><b>Details: </b> <?php echo $accident->Details; ?><br> Injured: <?php echo $accident->Injured; ?> <br> Damage: <?php echo $accident->DamageToVehicle; ?> Location: <?php echo $accident->Location; ?><br>3rd Party Damages: <?php echo $accident->ThirdPartyDamages; ?> </p>
             <img src="<?php echo base_url();?>uploads/<?php echo $accident->Images;?>" class="img-responsive">

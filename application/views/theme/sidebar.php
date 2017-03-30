@@ -151,8 +151,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-          <li><a href="<?= site_url('maintainance/index') ?>"><i class="fa fa-wrench"></i> <span>Repairs</span> </a></li>
-         <li><a href="<?= site_url('auth/index') ?>"><i class="fa fa-flag-checkered"></i> <span>Regular Maintenance</span> </a></li>
+          <li><a href="<?= site_url('') ?>"><i class="fa fa-wrench"></i> <span>Repairs</span> </a></li>
+         <li><a href="<?= site_url('maintainance/index') ?>"><i class="fa fa-flag-checkered"></i> <span>Regular Maintenance</span> </a></li>
          </ul>
          </li>
           <li class="treeview">

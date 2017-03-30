@@ -1,7 +1,8 @@
 <!-- Main content -->
     <section class="content">
-
-      <!-- Default box -->
+      <div class="row">
+        <div class="col-xs-12">
+        <?= form_open(uri_string(), 'class="form-horizontal"') ?>
       <div class="box box-success">
         <div class="box-header with-border">
           <h2 class="box-title">Record  Accident</h2>
@@ -20,7 +21,7 @@
         </div>
         <div class="box-body">
 <div id="infoMessage"><?php echo $message;?></div>
-        <?php echo form_open_multipart("maintainance/maintaincreate");?>
+        <?php echo form_open_multipart("maintainance/edit");?>
 
                 <div class="form-group">
                   <label for="date" class="col-sm-2 control-label">Date</label>
@@ -36,7 +37,9 @@
                      <select class="form-control" name="fleet">
                      <option>--select Fleet type--</option>
                      <?php foreach ($fleet_type as $fleet) :?>
-                       <option value="<?= $fleet->FleetType?>"><?= $fleet->FleetType?></option>
+                       <option value="<?= $fleet->FleetType?>" <?php if ($mainEdit->Fleet === $fleet->FleetType ): ?>
+                       <?php echo "Selected" ?>
+                       <?php endif ?>><?= $fleet->FleetType?></option>
                      <?php endforeach ?>
                      </select>
                   </div>
@@ -48,7 +51,9 @@
                     <select class="form-control" name="vehicleNo">
                      <option>--select Vehicle Number--</option>
                      <?php foreach ($vehicle_No as $vehicle) :?>
-                       <option value="<?= $vehicle->RegNo?>"><?= $vehicle->RegNo?></option>
+                       <option value="<?= $vehicle->RegNo?>" <?php if ($mainEdit->Vehicle === $vehicle->RegNo): ?>
+                       <?php echo "Selected" ?>
+                       <?php endif ?>><?= $vehicle->RegNo?></option>
                      <?php endforeach ?>
                      </select>
                   </div>
@@ -60,7 +65,9 @@
                     <select class="form-control" name="type">
                      <option>--select Vehicle type--</option>
                      <?php foreach ($vehicle_type as $vehicle) :?>
-                       <option value="<?= $vehicle->VehicleType?>"><?= $vehicle->VehicleType?></option>
+                       <option value="<?= $vehicle->VehicleType?>" <?php if ($mainEdit->Type === $vehicle->VehicleType ): ?>
+                       <?php echo "Selected" ?>
+                       <?php endif ?>><?= $vehicle->VehicleType?></option>
                      <?php endforeach ?>
                      </select>
                   </div>
@@ -79,7 +86,9 @@
                     <select class="form-control" name="supplier">
                     <option value="">--Select supplier--</option>
                      <?php foreach ($supplier as $s) :?>
-                       <option value="<?= $s->SupplierName?>"><?= $s->SupplierName?></option>
+                       <option value="<?= $s->SupplierName?>" <?php if ($mainEdit->Supplier === $s->SupplierName ): ?>
+                       <?php echo "Selected" ?>
+                       <?php endif ?>><?= $s->SupplierName?></option>
                      <?php endforeach ?>
                      </select>
                   </div>
@@ -135,7 +144,9 @@
                     <select class="form-control" name="Maintype">
                     <option value="">--Select Maintainance type--</option>
                      <?php foreach ($maintatype as $ty) :?>
-                       <option value="<?= $ty->Type?>"><?= $ty->Type?></option>
+                       <option value="<?= $ty->Type?>" <?php if ($mainEdit->MaintType === $ty->Type ): ?>
+                       <?php echo "Selected" ?>
+                       <?php endif ?>><?= $ty->Type?></option>
                      <?php endforeach ?>
                      </select>
                   </div>
@@ -143,6 +154,7 @@
       
    
       <?php echo form_hidden($csrf); ?>
+      <?php echo form_hidden('id', $mainEdit->Id);?>
       </div>
      <div class="box-footer">
      <button type="reset" class="btn btn-xs btn-danger pull-left"> cancel </button>

@@ -24,7 +24,8 @@
             <h1>Date: <small><b><?php echo $accident->SysDate; ?></b></small></h1>
             <h3>Vehicle: <small><b><?php echo $accident->Vehicle; ?></b></small></h3>
             <p>Details: <?php echo $accident->Details; ?></p>
-            <a href="<?php echo base_url();?>insurance/details/<?php echo $accident->Id;?>">Read More</a>
+            <a href="<?php echo base_url();?>insurance/details/<?php echo $accident->Id;?>">Read More</a><br>
+            <a href="<?php echo base_url();?>insurance/accident_e/<?php echo $accident->Id;?>">Edit</a>
           <?php endforeach; ?>
         </div>
 

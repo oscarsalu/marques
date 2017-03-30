@@ -140,12 +140,17 @@ class Maintainance extends CI_Controller {
     }
     public function edit($id)
     {
-        $this->data['title'] = 'Edit insurance';
+        $this->data['title'] = 'Edit Maintainace';
 
-        $insurance = $this->insurance_model->edit($id)->row();
-        $this->data['insurance']=$insurance;
+        $mainEdit = $this->maintainance_model->edit($id)->row();
+        $this->data['mainEdit']=$mainEdit;
         // validate form input
-        $this->form_validation->set_rules('name', 'Insurance Company', 'required');
+        $this->form_validation->set_rules('fleet', 'Fleet', 'required');
+        $this->form_validation->set_rules('vehicle', 'Vehicle', 'required');
+        $this->form_validation->set_rules('driver', 'Driver', 'required');
+        $this->form_validation->set_rules('details', 'Details', 'required');
+        $this->form_validation->set_rules('location', 'Location', 'required');
+        $this->form_validation->set_rules('status', 'status', 'required');
        
 
         if (isset($_POST) && !empty($_POST))
@@ -156,55 +161,100 @@ class Maintainance extends CI_Controller {
                 show_error($this->lang->line('error_csrf'));
             }
 
-        
-
-            if ($this->form_validation->run() === TRUE)
-            {
-                 $company_data = array(
-                        'Name' => $this->input->post('name'),
-                        'ContactName' => $this->input->post('contactname'),
-                        'ContactNo' => $this->input->post('contactNo')
-                      
+                $maintain_data = array(
+                        'SysDate' => date('Y-m-d H:i:s'),
+                        'Date' => $this->input->post('date'),
+                        'Fleet' => $this->input->post('fleet'),
+                        'Vehicle' => $this->input->post('vehicleNo'),
+                        'Type' => $this->input->post('type'),
+                        'Supplier'=> $this->input->post('supplier'),
+                        'Cost' => $this->input->post('cost'),
+                        'Remarks' => $this->input->post('Remarks'),
+                        'EnteredBy' => $this->input->post('enteredBy'),
+                        'Approval' => $this->input->post('approval'),
+                        'MeterReading' => $this->input->post('meter'),
+                        'AccidentRef' => $this->input->post('acciref'),
+                        'PaymentVoucher' => $this->input->post('voucher'),
+                        'MaintType' => $this->input->post('Maintype')
                     );
-               if($this->insurance_model->update($insurance->Id, $company_data))
-                {
-                    $this->session->set_flashdata('message', $this->ion_auth->messages() );
-        
-                     $this->index();
-                }
-
-            }else{
-                   $this->session->set_flashdata('message', $this->ion_auth->errors() );
-                   redirect('insurance/edit/'.$insurance->Id, 'refresh');
-            }
+                    $this->maintainance_model->update($mainEdit->Id, $maintain_data);
+                    $this->index();
         }else{
               $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
               $this->data['csrf'] = $this->_get_csrf_nonce();
-              $this->data['name'] = array(
-                'name'  => 'name',
-                'id'    => 'name',
+              $this->data['fleet_type'] = $this->insurance_model->get_fleet();
+               $this->data['driver'] = $this->insurance_model->get_driver();
+               $this->data['vehicle_type'] = $this->insurance_model->get_vehicle();
+               $this->data['vehicle_No'] = $this->insurance_model->get_vehicleNo();
+               $this->data['supplier'] = $this->maintainance_model->get_supplier();
+               $this->data['maintatype'] = $this->maintainance_model->get_maintype();
+
+            $this->data['date'] = array(
+                'name'  => 'date',
+                'id'    => 'date',
                 'type'  => 'text',
-                'value' => $this->form_validation->set_value('type', $insurance->Name),
-                'placeholder'=>'Insurance Name',
+                'value' => $mainEdit->Date,
+                'placeholder'=>'Date',
                 'class' => 'form-control'
             );
-            $this->data['contactname'] = array(
-                'name'  => 'contactname',
-                'id'    => 'contactname',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('type', $insurance->ContactName),
-                'placeholder'=>'Contact Name',
+            $this->data['Remarks'] = array(
+                'name'  => 'Remarks',
+                'id'    => 'Remarks',
+                'rows'        => '5',
+                'cols'        => '10',
+                'style'       => 'width:50%',
+                'value' => $this->form_validation->set_value('type',$mainEdit->Remarks),
+                'placeholder'=>'Your Remarks',
                 'class' => 'form-control'
             );
-            $this->data['contactNo'] = array(
-                'name'  => 'contactNo',
-                'id'    => 'contactNo',
+            $this->data['cost'] = array(
+                'name'  => 'cost',
+                'id'    => 'cost',
                 'type'  => 'text',
-                'value' => $this->form_validation->set_value('type', $insurance->ContactNo),
-                'placeholder'=>'Contact Number',
+                'value' => $this->form_validation->set_value('type', $mainEdit->Cost),
+                'placeholder'=>'Cost',
                 'class' => 'form-control'
             );
-            $this->render_page('theme/insurance/edit', $this->data);
+            $this->data['enteredBy'] = array(
+                'name'  => 'enteredBy',
+                'id'    => 'enteredBy',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type', $mainEdit->EnteredBy),
+                'placeholder'=>'Enter Your Name',
+                'class' => 'form-control'
+            );
+            $this->data['approval'] = array(
+                'name'  => 'approval',
+                'id'    => 'approval',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type', $mainEdit->Approval),
+                'class' => 'form-control'
+            );
+            $this->data['meter'] = array(
+                'name'  => 'meter',
+                'id'    => 'meter',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type', $mainEdit->MeterReading),
+                'placeholder'=>'What is the meter reading',
+                'class' => 'form-control'
+            );
+            $this->data['acciref'] = array(
+                'name'  => 'acciref',
+                'id'    => 'acciref',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type', $mainEdit->AccidentRef),
+                'placeholder'=>'Accident Reference',
+                'class' => 'form-control'
+            );
+            $this->data['voucher'] = array(
+                'name'  => 'voucher',
+                'id'    => 'voucher',
+                'type'  => 'voucher',
+                'value' => $this->form_validation->set_value('type', $mainEdit->PaymentVoucher ),
+                'placeholder'=>'Payment Voucher',
+                'class' => 'form-control'
+            );
+            $this->render_page('theme/repair/edit', $this->data);
         }
 
    }

@@ -40,6 +40,7 @@
                 <th>Accident Ref</th>
                 <th>Payment voucher</th>
 								<th>Maintainance Type</th>
+                <th>Action</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -58,6 +59,9 @@
                         <td><?= $m->AccidentRef ?></td>
                         <td><?= $m->PaymentVoucher ?></td>
                         <td><?= $m->MaintType ?></td>
+                        <td><a href="<?= site_url('maintainance/edit/'.$m->Id); ?>" data-toggle="tooltip"  title="edit" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
+                        <a href="<?= site_url('maintainance/delete/'.$m->Id); ?>" data-toggle="tooltip"  title="delete" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>           
+                  </td>
 								</tr>
 							<?php endforeach;?>
 							</tbody>

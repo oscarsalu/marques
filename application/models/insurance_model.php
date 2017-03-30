@@ -84,6 +84,10 @@ class Insurance_model extends CI_Model {
           return array();
         }
      }
+     public function edit_accident($id)
+     {
+        return $this->db->get_where('accidents', array('Id'=>$id));
+     }
      public function per_id($id)
      {
        $this->db->where('Id', $id);
@@ -96,6 +100,12 @@ class Insurance_model extends CI_Model {
                 return true;
             }
             return false;
+     }
+     public function update_accident($id, $data)
+     {
+        $this->db->where('Id', $id);
+        $this->db->update('accidents', $data);
+        
      }
      public function get_fleet()
      {
@@ -128,5 +138,15 @@ class Insurance_model extends CI_Model {
      {
        $query = $this->db->get('vehiclemaster');
                 return $query->result();
+     }
+     public function editClaim($id)
+     {
+        return $this->db->get_where('insuranceclaims', array('Id'=>$id));
+     }
+     public function update_claim($id, $data)
+     {
+        $this->db->where('Id', $id);
+        $this->db->update('insuranceclaims', $data);
+        
      }
 }

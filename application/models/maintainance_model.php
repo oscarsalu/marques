@@ -30,4 +30,13 @@ class Maintainance_model extends CI_Model {
                 $query = $this->db->get('servicetypemaster');
                 return $query->result();
         }
+        public function edit($id)
+        {
+           return $this->db->get_where('maintenenace', array('Id'=>$id));
+        }
+        public function update($id, $data)
+       {
+          $this->db->where('Id', $id);
+          $this->db->update('maintenenace', $data);
+       }
 }

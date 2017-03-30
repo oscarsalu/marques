@@ -47,6 +47,7 @@
                 <th>Reciept No</th>
                 <th>Remarks</th>
                 <th>Insurer</th>
+                <th>Action</th>
               </th>
 							</tr>
 							</thead>
@@ -62,7 +63,10 @@
                         <td><?= $claim->EnteredBy ?></td>
                         <td><?= $claim->ReceiptNo ?></td>
                         <td><?= $claim->Remarks ?></td>
-                        <td><?= $claim->insurer ?></td>       
+                        <td><?= $claim->insurer ?></td>
+                        <td><a href="<?= site_url('insurance/editClaim/'.$claim->Id); ?>" data-toggle="tooltip"  title="edit" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
+                        <a href="<?= site_url('insurance/deleteClaim/'.$claim->Id); ?>" data-toggle="tooltip"  title="delete" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>           
+                  </td>      
 									</td>
 								</tr>
 							<?php endforeach;?>
