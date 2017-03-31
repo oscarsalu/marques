@@ -66,7 +66,7 @@
                   </div>
                </div>
                <div class="form-group">
-                  <label for="Remarks" class="col-sm-2 control-label">Remarks<span style="color:red">*</span></label>
+                  <label for="Remarks" class="col-sm-2 control-label">Remarks</label>
 
                   <div class="col-sm-10">
                     <?php echo form_textarea($Remarks);?><span><?= form_error('Remarks'); ?></span>

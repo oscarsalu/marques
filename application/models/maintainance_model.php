@@ -21,6 +21,13 @@ class Maintainance_model extends CI_Model {
             }
             return false;
         }
+        public function createRepair($data)
+        {
+            if($this->db->insert('repair', $data)){
+                return true;
+            }
+            return false;
+        }
         public function get_supplier()
         {
                 $query = $this->db->get('suppliermaster');
@@ -34,9 +41,22 @@ class Maintainance_model extends CI_Model {
         {
            return $this->db->get_where('maintenenace', array('Id'=>$id));
         }
-        public function update($id, $data)
+        public function editREpair($id)
+        {
+           return $this->db->get_where('repair', array('Id'=>$id));
+        }
+        public function updateRepair($id, $data)
+       {
+          $this->db->where('Id', $id);
+          $this->db->update('repair', $data);
+       }public function update($id, $data)
        {
           $this->db->where('Id', $id);
           $this->db->update('maintenenace', $data);
        }
+       public function get_repair()
+        {
+                $query = $this->db->get('repair');
+                return $query->result();
+        }
 }

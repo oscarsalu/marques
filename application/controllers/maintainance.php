@@ -268,7 +268,169 @@ class Maintainance extends CI_Controller {
      }
       $this->index();
    }
-	public function _get_csrf_nonce()
+   public function repair()
+       {
+           $this->data['repair'] = $this->maintainance_model->get_repair();
+           $this->render_page('theme/repair/repair', $this->data);
+       }
+	public function repaircreate()
+    {
+
+        $this->form_validation->set_rules('cost', 'Cost', 'required');
+        $this->form_validation->set_rules('vehicleNo', 'Vehicle', 'required');
+
+        if ($this->form_validation->run() == true)
+        {
+ 
+            $repair_data = array(
+                'Date' => $this->input->post('date'),
+                'Vehicle' => $this->input->post('vehicleNo'),
+                'part' => $this->input->post('part'),
+                'cost'=> $this->input->post('cost'),
+                'Details' => $this->input->post('Details'),
+                'EnteredBy' => $this->input->post('enteredBy')
+            );
+        }
+        if ($this->form_validation->run() == true && $this->maintainance_model->createRepair($repair_data))
+        {
+            $this->session->set_flashdata('message', $this->ion_auth->messages());
+            $this->accident();
+        }
+        else
+        {
+            
+            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+               $this->data['csrf'] = $this->_get_csrf_nonce();
+               $this->data['vehicle_type'] = $this->insurance_model->get_vehicle();
+               $this->data['vehicle_No'] = $this->insurance_model->get_vehicleNo();
+
+            $this->data['date'] = array(
+                'name'  => 'date',
+                'id'    => 'date',
+                'type'  => 'text',
+                'value' => date('Y-m-d H:i:s'),
+                'placeholder'=>'Date',
+                'class' => 'form-control'
+            );
+            $this->data['Details'] = array(
+                'name'  => 'Details',
+                'id'    => 'Details',
+                'rows'        => '5',
+                'cols'        => '10',
+                'style'       => 'width:50%',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'Details of your repair',
+                'class' => 'form-control'
+            );
+            $this->data['cost'] = array(
+                'name'  => 'cost',
+                'id'    => 'cost',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'Cost',
+                'class' => 'form-control'
+            );
+            $this->data['part'] = array(
+                'name'  => 'part',
+                'id'    => 'part',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'Name Of the Part being replaced',
+                'class' => 'form-control'
+            );
+            $this->data['enteredBy'] = array(
+                'name'  => 'enteredBy',
+                'id'    => 'enteredBy',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type'),
+                'placeholder'=>'Enter Your Name',
+                'class' => 'form-control'
+            );
+           
+
+            $this->render_page('theme/repair/createRepair', $this->data);
+        }
+    }
+    public function repair_edit($id)
+    {
+        
+        $repairEdit = $this->maintainance_model->editREpair($id)->row();
+        $this->data['repairEdit']=$repairEdit;
+        // validate form input
+        $this->form_validation->set_rules('cost', 'Cost', 'required');
+        $this->form_validation->set_rules('vehicleNo', 'Vehicle', 'required');
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
+                show_error($this->lang->line('error_csrf'));
+            }
+
+                $repair_data = array(
+                        'Date' => $this->input->post('date'),
+                        'Vehicle' => $this->input->post('vehicleNo'),
+                        'part' => $this->input->post('part'),
+                        'cost'=> $this->input->post('cost'),
+                        'Details' => $this->input->post('details'),
+                        'EnteredBy' => $this->input->post('enteredBy')
+                    );
+                    $this->maintainance_model->updateRepair($repairEdit->Id, $repair_data);
+                    $this->repair();
+        }else{
+              $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+              $this->data['csrf'] = $this->_get_csrf_nonce();
+              $this->data['vehicle_type'] = $this->insurance_model->get_vehicle();
+               $this->data['vehicle_No'] = $this->insurance_model->get_vehicleNo();
+
+            $this->data['date'] = array(
+                'name'  => 'date',
+                'id'    => 'date',
+                'type'  => 'text',
+                'value' => $repairEdit->Date,
+                'placeholder'=>'Date',
+                'class' => 'form-control'
+            );
+            $this->data['Details'] = array(
+                'name'  => 'Details',
+                'id'    => 'Details',
+                'rows'        => '5',
+                'cols'        => '10',
+                'style'       => 'width:50%',
+                'value' => $this->form_validation->set_value('type', $repairEdit->Details),
+                'placeholder'=>'Details of your repair',
+                'class' => 'form-control'
+            );
+            $this->data['cost'] = array(
+                'name'  => 'cost',
+                'id'    => 'cost',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type', $repairEdit->cost),
+                'placeholder'=>'Cost of the part being repaired',
+                'class' => 'form-control'
+            );
+            $this->data['part'] = array(
+                'name'  => 'part',
+                'id'    => 'part',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type', $repairEdit->part),
+                'placeholder'=>'Name of the part being repaired',
+                'class' => 'form-control'
+            );
+            $this->data['enteredBy'] = array(
+                'name'  => 'enteredBy',
+                'id'    => 'enteredBy',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('type', $repairEdit->EnteredBy),
+                'placeholder'=>'Enter Your Name',
+                'class' => 'form-control'
+            );
+            $this->render_page('theme/repair/editRepair', $this->data);
+        }
+
+   }
+    public function _get_csrf_nonce()
 	{
 		$this->load->helper('string');
 		$key   = random_string('alnum', 8);
