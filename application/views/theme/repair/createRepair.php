@@ -1,7 +1,5 @@
 <!-- Main content -->
     <section class="content">
-
-      <!-- Default box -->
       <div class="box box-success">
         <div class="box-header with-border">
           <h2 class="box-title">Record  Repair</h2>
