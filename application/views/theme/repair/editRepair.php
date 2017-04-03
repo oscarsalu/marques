@@ -54,7 +54,9 @@
                     <select class="form-control" name="vehicleNo">
                      <option>--select Vehicle Number--</option>
                      <?php foreach ($vehicle_No as $vehicle) :?>
-                       <option value="<?= $vehicle->RegNo?>"><?= $vehicle->RegNo?></option>
+                       <option value="<?= $vehicle->RegNo?>" <?php if ($repairEdit->vehicle === $vehicle->RegNo): ?>
+                       <?php echo "Selected" ?>
+                       <?php endif ?> ><?= $vehicle->RegNo?></option>
                      <?php endforeach ?>
                      </select>
                   </div>
@@ -82,6 +84,7 @@
                </div>
    
       <?php echo form_hidden($csrf); ?>
+      <?php echo form_hidden('id', $repairEdit->id);?>
       </div>
      <div class="box-footer">
      <button type="reset" class="btn btn-xs btn-danger pull-left"> cancel </button>
