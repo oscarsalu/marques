@@ -302,7 +302,7 @@ class Maintainance extends CI_Controller {
         if ($this->form_validation->run() == true && $this->maintainance_model->createRepair($repair_data))
         {
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            $this->accident();
+            $this->repair();
         }
         else
         {
@@ -430,7 +430,7 @@ class Maintainance extends CI_Controller {
                 'name'  => 'enteredBy',
                 'id'    => 'enteredBy',
                 'type'  => 'text',
-                'value' => $this->form_validation->set_value('type', $repairEdit->EnteredBy),
+                'value' => $this->form_validation->set_value('type', $repairEdit->enteredBy),
                 'placeholder'=>'Enter Your Name',
                 'class' => 'form-control'
             );
