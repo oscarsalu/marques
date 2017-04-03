@@ -21,6 +21,22 @@ class Maintainance_model extends CI_Model {
             }
             return false;
         }
+        public function delete($id)
+         {
+             $this->db->where('Id', $id);
+            if ($this->db->delete('maintenenace')) {
+               return TRUE;
+            }
+            return FALSE;
+         }
+         public function repair_delete($id)
+         {
+             $this->db->where('Id', $id);
+            if ($this->db->delete('repair')) {
+               return TRUE;
+            }
+            return FALSE;
+         }
         public function createRepair($data)
         {
             if($this->db->insert('repair', $data)){

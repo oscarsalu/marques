@@ -262,7 +262,15 @@ class Maintainance extends CI_Controller {
     
     public function delete($value)
    {
-     if($this->insurance_model->delete($value)==TRUE){
+     if($this->maintainance_model->delete($value)==TRUE){
+        $this->data['message'] =  $this->session->set_flashdata('message','Successfully Removed');
+          
+     }
+      $this->index();
+   }
+   public function repair_delete($value)
+   {
+     if($this->maintainance_model->repair_delete($value)==TRUE){
         $this->data['message'] =  $this->session->set_flashdata('message','Successfully Removed');
           
      }

@@ -57,8 +57,8 @@
                         <td><?= $r->Date ?></td>
                         <td><?= $r->enteredBy ?></td>
                         <td><?= $r->Details ?></td>
-                        <td><a href="<?= site_url('maintainance/repair_edit/'.$m->Id); ?>" data-toggle="tooltip"  title="edit" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
-                        <a href="<?= site_url('maintainance/repair_delete/'.$m->Id); ?>" data-toggle="tooltip"  title="delete" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>           
+                        <td><a href="<?= site_url('maintainance/repair_edit/'.$r->id); ?>" data-toggle="tooltip"  title="edit" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
+                        <a href="<?= site_url('maintainance/repair_delete/'.$r->id); ?>" data-toggle="tooltip"  title="delete" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>           
                   </td>
 								</tr>
 							<?php endforeach;?>
