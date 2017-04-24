@@ -125,8 +125,15 @@ class Fleet_model extends CI_Model {
       { 
           return $this->db->get_where('drivers', array('id'=>$id));     
       }
+      
+      // return available driver for assignments
+      public function get_available_drivers($where)
+      { 
+          $query = $this->db->query("select * from drivers $where");
+          return $query->result();    
+      }
 
-       //update a particular record of drivers
+     //update a particular record of drivers
      public function update_driver($id, $data)
      {
         $this->db->where('id', $id);

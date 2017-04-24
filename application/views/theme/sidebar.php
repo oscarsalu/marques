@@ -97,8 +97,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-          <li><a href="<?= site_url('facilities') ?>"><i class="fa fa-list"></i> <span>Orders</span></a></li>
-          <li><a href="<?= site_url('auth/index') ?>"><i class="fa fa-file-text"></i> <span>Payment details</span> </a></li>
+          <li><a href="<?= site_url('order/order') ?>"><i class="fa fa-list"></i> <span>Orders</span></a></li>
+          <li><a href="<?= site_url('order/getOrders') ?>"><i class="fa fa-file-text"></i> <span>Order List</span> </a></li>
           </ul>
           </li>
           <li class="treeview">
@@ -110,9 +110,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
-          <li><a href="<?= site_url('fleet/fleets') ?>"><i class="fa fa-truck"></i> fleet </a></li>
+           <li><a href="<?= site_url('fleet/fleets') ?>"><i class="fa fa-truck"></i> fleet </a></li>
            <li><a href="<?= site_url('fleet/vehicle_types') ?>"><i class="fa fa-circle-o"></i>Vehicle Types</a></li>
            <li><a href="<?= site_url('fleet/drivers') ?>"><i class="fa fa-users"></i> <span>Drivers</span> </a></li>
+           <li><a href="<?= site_url('fleetscheduling/routes') ?>"><i class="fa fa-truck"></i>Routes</a></li>
+           <li><a href="<?= site_url('fleetscheduling/driveroffs') ?>"><i class="fa fa-truck"></i>Driver Offs</a></li>
+           <li><a href="<?= site_url('fleetscheduling/fleetschedules') ?>"><i class="fa fa-truck"></i>Fleet Schedule</a></li>
+           <li><a href="<?= site_url('fleetscheduling/driverassignments') ?>"><i class="fa fa-truck"></i>Driver Assignment</a></li>
            </ul>
            </li>
           <li class="treeview">

@@ -182,8 +182,8 @@ class Fleet extends CI_Controller {
 
 	
 	
-	// create a new fleet object
-	public function create_fleet()
+    // create a new fleet object
+    public function create_fleet()
     {
         $this->data['title'] ='create fleet' ;
 

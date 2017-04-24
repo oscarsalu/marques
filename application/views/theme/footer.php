@@ -12,29 +12,14 @@
     <strong>Copyright &copy; 2016 <a href="#">ALGOMINE TECH LTD</a>.</strong> All rights reserved.
   </footer>
 
-<!-- jQuery 2.2.3 -->
-<script src="<?= base_url() ?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
-
-<!-- Bootstrap 3.3.6 -->
-<script src="<?= base_url() ?>assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="<?= base_url() ?>assets/plugins/datepicker/bootstrap-datepicker.js"></script>
-<!-- AdminLTE App -->
-<script src="<?= base_url() ?>assets/dist/js/app.min.js"></script>
-<script src="<?= base_url() ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="<?= base_url() ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="<?= base_url() ?>assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="<?= base_url() ?>assets/plugins/fastclick/fastclick.js"></script>
-
-<!-- AdminLTE for demo purposes -->
-<script src="<?= base_url() ?>assets/dist/js/demo.js"></script>
-<!-- page script -->
 <script>
   $(function () {
    
     $('#example1').DataTable({
-      
+      dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
       "processing":true,
       "searching": true,
      
@@ -42,15 +27,20 @@
    
 
       $('#datepicker').datepicker({
-      autoclose: true
+      autoclose: true,
+      format: 'yyyy-mm-dd'
     });
         $('#altdatepicker').datepicker({
-      autoclose: true
+      autoclose: true,
+      format: 'yyyy-mm-dd'
     });
+    
+    $('.date_input').datepicker({
+      autoclose: true,
+      format: 'yyyy-mm-dd'
+    });
+        
   });
-
-
-
 </script>
 <script >
   $('#select_all').click(function(event) {
@@ -69,7 +59,17 @@
 
 });
 </script>
-
+<script language="javascript" type="text/javascript">
+	
+	var newwindow;
+	function poptastic(url,h,w)
+	{ 
+		var ht=600;
+		var wd=900;
+		newwindow=window.open(url,'name','height='+ht+',width='+wd+',scrollbars=yes,left=250,top=80');
+		if (window.focus) {newwindow.focus()}
+	}
+      </script>
 </body>
 
 </html>
