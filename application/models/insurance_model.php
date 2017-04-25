@@ -149,4 +149,24 @@ class Insurance_model extends CI_Model {
         $this->db->update('insuranceclaims', $data);
         
      }
+     public function get_data($value)
+     {
+        $query = $this->db->query("select * from repair $value");
+        return $query->result();
+     }
+     public function get_maint($value)
+     {
+        $query = $this->db->query("select * from maintenenace $value");
+        return $query->result();
+     }
+     public function get_accid($value)
+     {
+        $query = $this->db->query("select * from accidents $value");
+        return $query->result();
+     }
+     public function get_claim($value)
+     {
+        $query = $this->db->query("select * from insuranceclaims $value");
+        return $query->result();
+     }
 }

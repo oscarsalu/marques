@@ -9,6 +9,7 @@ class Insurance extends CI_Controller {
 		$this->load->library(array('ion_auth','form_validation'));
 		$this->load->helper(array('url','language','text'));
         $this->load->model('insurance_model');
+        $this->load->model('maintainance_model');
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
 		$this->lang->load('auth');
@@ -879,5 +880,255 @@ class Insurance extends CI_Controller {
         $this->load->view($view, $this->viewdata, $returnhtml);
         $this->load->view('theme/footer');
     
-    } 
+    }
+    public function report_repair()
+     {
+
+        
+        $obj = (object)$_POST;
+        $where = "";
+        $track = 0 ;
+        if(!empty($obj->vehicleNo)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="vehicle='$obj->vehicleNo'";
+        }
+        if(!empty($obj->part)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="part='$obj->part'";
+        }
+        if(!empty($obj->fromdate)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Date>='$obj->fromdate'";
+        }
+        if(!empty($obj->todate)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Date<='$obj->todate'";
+        }
+        if(!empty($obj->fromcost)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="cost>='$obj->fromcost'";
+        }
+        if(!empty($obj->tocost)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="cost<='$obj->tocost'";
+        }
+        $this->data['vehicle_No'] = $this->insurance_model->get_vehicleNo();
+        $this->data['vehicleData'] = $this->insurance_model->get_data($where);
+        $this->render_page('theme/repair/repair_reports', $this->data);
+     } 
+     public function report_maintainance()
+     {
+
+        
+        $obj = (object)$_POST;
+        $where = "";
+        $track = 0 ;
+        if(!empty($obj->vehicleNo)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Vehicle='$obj->vehicleNo'";
+        }
+        if(!empty($obj->fleet)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Fleet='$obj->fleet'";
+        }
+        if(!empty($obj->type)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Type='$obj->type'";
+        }
+        if(!empty($obj->supplier)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Supplier='$obj->supplier'";
+        }
+        if(!empty($obj->Maintype)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="MaintType='$obj->Maintype'";
+        }
+        if(!empty($obj->fromdate)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Date>='$obj->fromdate'";
+        }
+        if(!empty($obj->todate)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Date<='$obj->todate'";
+        }
+        if(!empty($obj->fromcost)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Cost>='$obj->fromcost'";
+        }
+        if(!empty($obj->tocost)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Cost<='$obj->tocost'";
+        }
+         $this->data['fleet_type'] = $this->insurance_model->get_fleet();
+        $this->data['driver'] = $this->insurance_model->get_driver();
+         $this->data['vehicle_type'] = $this->insurance_model->get_vehicle();
+         $this->data['vehicle_No'] = $this->insurance_model->get_vehicleNo();
+         $this->data['supplier'] = $this->maintainance_model->get_supplier();
+         $this->data['maintatype'] = $this->maintainance_model->get_maintype();
+        $this->data['maintData'] = $this->insurance_model->get_maint($where);
+        $this->render_page('theme/repair/maintainance_report', $this->data);
+     } 
+     public function report_accident()
+     {
+
+        
+        $obj = (object)$_POST;
+        $where = "";
+        $track = 0 ;
+        if(!empty($obj->vehicleNo)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Vehicle='$obj->vehicleNo'";
+        }
+        if(!empty($obj->fleet)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Fleet='$obj->fleet'";
+        }
+        if(!empty($obj->type)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Type='$obj->type'";
+        }
+        if(!empty($obj->driver)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Driver='$obj->driver'";
+        }
+        if(!empty($obj->death)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="MaintType >='$obj->death'";
+        }
+        if(!empty($obj->fromdate)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Date>='$obj->fromdate'";
+        }
+        if(!empty($obj->todate)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Date<='$obj->todate'";
+        }
+         $this->data['fleet_type'] = $this->insurance_model->get_fleet();
+         $this->data['driver'] = $this->insurance_model->get_driver();
+        $this->data['vehicle_type'] = $this->insurance_model->get_vehicle();
+        $this->data['vehicle_No'] = $this->insurance_model->get_vehicleNo();
+        $this->data['acciData'] = $this->insurance_model->get_accid($where);
+        $this->render_page('theme/insurance/accident_records', $this->data);
+     }
+     public function report_claims()
+     {
+
+        
+        $obj = (object)$_POST;
+        $where = "";
+        $track = 0 ;
+        if(!empty($obj->vehicleNo)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Vehicle='$obj->vehicleNo'";
+        }
+        if(!empty($obj->fleet)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Fleet='$obj->fleet'";
+        }
+        if(!empty($obj->type)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Type='$obj->type'";
+        }
+        if(!empty($obj->death)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="MaintType >='$obj->death'";
+        }
+        if(!empty($obj->fromdate)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Date>='$obj->fromdate'";
+        }
+        if(!empty($obj->todate)){
+            if ($track>0)
+                $where.=" and ";
+            else
+                $where.=" where ";
+            $where.="Date<='$obj->todate'";
+        }
+         $this->data['fleet_type'] = $this->insurance_model->get_fleet();
+        $this->data['vehicle_type'] = $this->insurance_model->get_vehicle();
+        $this->data['vehicle_No'] = $this->insurance_model->get_vehicleNo();
+        $this->data['claimData'] = $this->insurance_model->get_claim($where);
+        $this->render_page('theme/insurance/insurance_report', $this->data);
+     } 
 }

@@ -26,7 +26,8 @@
             <h3>Driver: <small><?php echo $accident->Driver;?></small></h3>
             <p>Type: <?php echo $accident->Type; ?></p>
             <p>Fleet: <?php echo $accident->Fleet; ?></p>
-            <p><b>Details: </b> <?php echo $accident->Details; ?><br> Injured: <?php echo $accident->Injured; ?> <br> Damage: <?php echo $accident->DamageToVehicle; ?> Location: <?php echo $accident->Location; ?><br>3rd Party Damages: <?php echo $accident->ThirdPartyDamages; ?> </p>
+            <p>Death: <?php echo $accident->Deaths; ?></p>
+            <p><b>Details: </b> <?php echo $accident->Details; ?><br> Injured: <?php echo $accident->Injured; ?> <br> Damage: <?php echo $accident->DamageToVehicle; ?> <br> Location: <?php echo $accident->Location; ?><br>3rd Party Damages: <?php echo $accident->ThirdPartyDamages; ?></p>
             <img src="<?php echo base_url();?>uploads/<?php echo $accident->Images;?>" class="img-responsive">
             <p>Status Of The Injured: <?php echo $accident->StatusInjured; ?></p>
           <?php endforeach; ?>

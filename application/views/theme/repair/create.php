@@ -34,7 +34,7 @@
 
                   <div class="col-sm-10">
                      <select class="form-control" name="fleet">
-                     <option>--select Fleet type--</option>
+                     <option value="">--select Fleet type--</option>
                      <?php foreach ($fleet_type as $fleet) :?>
                        <option value="<?= $fleet->FleetType?>"><?= $fleet->FleetType?></option>
                      <?php endforeach ?>

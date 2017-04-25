@@ -174,6 +174,21 @@
           <li><a href="<?= site_url('insurance/claims') ?>"><i class="fa fa-users"></i> <span>Insurance Claims</span> </a></li>
          </ul>
          </li>
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-umbrella"></i>
+            <span>Reports</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+           <li><a href="<?= site_url('insurance/report_repair') ?>"><i class="fa fa-umbrella"></i>Repair</a></li>
+          <li><a href="<?= site_url('insurance/report_maintainance') ?>"><i class="fa fa-refresh"></i> <span>Maintainance</span> </a></li>
+          <li><a href="<?= site_url('insurance/report_accident') ?>"><i class="fa fa-users"></i> <span>Accident</span> </a></li>
+          <li><a href="<?= site_url('insurance/report_claims') ?>"><i class="fa fa-users"></i> <span>Insurance</span> </a></li>
+         </ul>
+         </li>
       
          <li class="treeview">
           <a href="#">
