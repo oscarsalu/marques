@@ -169,7 +169,8 @@
           </a>
           <ul class="treeview-menu">
            <li><a href="<?= site_url('insurance/index') ?>"><i class="fa fa-umbrella"></i>Insurance companies</a></li>
-          <li><a href="<?= site_url('insurance/renewal') ?>"><i class="fa fa-refresh"></i> <span>Renenewals</span> </a></li>
+          <li><a href="<?= site_url('insurancepayments/index') ?>"><i class="fa fa-refresh"></i> <span>Insurance Payments</span> </a></li>
+          <li><a href="<?= site_url('Otherrenewal/index') ?>"><i class="fa fa-refresh"></i> <span>Other Renewals</span> </a></li>
           <li><a href="<?= site_url('insurance/accident') ?>"><i class="fa fa-users"></i> <span>Accident records</span> </a></li>
           <li><a href="<?= site_url('insurance/claims') ?>"><i class="fa fa-users"></i> <span>Insurance Claims</span> </a></li>
          </ul>
